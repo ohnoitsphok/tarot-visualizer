@@ -782,8 +782,8 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
       </div>
 
       {/* CELESTIAL TOP ARC: Floating Header, Navigation Chevrons, & Seal Buttons */}
-      <header className="relative z-10 flex flex-wrap items-center justify-between gap-4 py-2 border-b border-gold/20 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
+      <header className="relative z-10 flex flex-wrap items-center justify-between sm:grid sm:grid-cols-[1fr_auto_1fr] gap-4 py-2 border-b border-gold/20 backdrop-blur-sm">
+        <div className="flex items-center gap-2 justify-self-start">
           <button
             type="button"
             onClick={() => {
@@ -812,7 +812,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
         </div>
 
         {/* Centered Celestial Title Orb */}
-        <div className="flex items-center gap-3 text-center">
+        <div className="flex items-center gap-3 text-center justify-self-center">
           <button
             type="button"
             onClick={() => stepCard(-1)}
@@ -823,13 +823,20 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
           </button>
 
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-serif uppercase tracking-[0.2em] text-gold/90">
-              {selectedCard.arcana} Arcana &bull; {selectedCard.numerology.numeral}
+            <span className="text-[10px] font-serif uppercase tracking-[0.2em] text-gold/90 block text-center">
+              {selectedCard.arcana === 'major'
+                ? `Major Arcana \u2022 ${selectedCard.numerology.numeral}`
+                : `${selectedCard.suit} \u2022 ${selectedCard.numerology.numeral}`}
             </span>
-            <div className="relative">
+            <div className="relative group inline-flex items-center justify-center rounded px-1.5 py-0.5 focus-within:ring-2 focus-within:ring-gold/60">
               <label htmlFor="card-selector" className="sr-only">
                 Select card
               </label>
+              <span className="text-base sm:text-xl font-serif font-semibold text-gold-light group-hover:text-gold transition-colors text-center cursor-pointer select-none">
+                {selectedCard.arcana === 'major'
+                  ? `${selectedCard.numerology.numeral}. ${selectedCard.name}`
+                  : selectedCard.name}
+              </span>
               <select
                 id="card-selector"
                 value={selectedCard.id}
@@ -838,7 +845,8 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                   setActiveHotspotId(null);
                   setHoveredHotspotId(null);
                 }}
-                className="bg-transparent border-none text-base sm:text-xl font-serif font-semibold text-gold-light text-center focus:outline-none focus:ring-1 focus:ring-gold cursor-pointer"
+                aria-label="Select card"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer text-base font-serif"
               >
                 <optgroup label="Major Arcana">
                   {MAJOR_CARDS.map((c) => (
@@ -869,7 +877,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
         </div>
 
         {/* Right Element & Astrological Celestial Pill */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-self-end">
           <div className="hidden sm:flex flex-col text-right">
             <span className="text-xs text-slate-200 capitalize font-serif">{selectedCard.element}</span>
             <span className="text-[10px] font-mono text-purple-300">{selectedCard.astrology}</span>
