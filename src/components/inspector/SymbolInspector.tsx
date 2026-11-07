@@ -426,7 +426,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
         </button>
 
         {isExpanded && (
-          <div className="fixed inset-x-4 top-20 sm:absolute sm:inset-auto sm:top-full sm:mt-2 sm:left-0 z-50 bg-obsidian-surface/95 sm:bg-obsidian-surface/95 border border-gold/40 rounded-2xl p-4 shadow-2xl backdrop-blur-xl sm:w-[480px] max-h-[75vh] overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian/70 backdrop-blur-sm" onClick={() => setExpandedCornerSuit(null)}><div role="dialog" aria-label={`${cfg.name} cards`} onClick={(e) => e.stopPropagation()} className="w-full max-w-3xl max-h-[88vh] overflow-y-auto bg-obsidian-surface/95 border border-gold/40 rounded-2xl p-4 sm:p-6 shadow-2xl">
             <div className="flex items-center justify-between border-b border-gold/20 pb-2 mb-3">
               <div className="flex items-center gap-2">
                 <Icon className="h-4 w-4 text-gold" />
@@ -444,7 +444,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               </button>
             </div>
 
-            <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+            <div className="grid grid-cols-4 sm:grid-cols-7 gap-3">
               {suitCards.map((card) => (
                 <button
                   key={card.id}
@@ -466,7 +466,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                 </button>
               ))}
             </div>
-          </div>
+          </div></div>
         )}
       </div>
     );
@@ -538,14 +538,14 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             {/* Center Rotating Magic Circle Background */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <MagicCircleBackground
-                size="min(68vw, 68vh, 560px)"
+                size="min(80vw, 76vh, 900px)"
                 className="opacity-20 text-gold"
                 rotate
               />
             </div>
 
             {/* Central Identity Hub */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center z-20 w-32 sm:w-44 p-3 sm:p-4 rounded-full border border-gold/30 bg-obsidian-elevated/90 backdrop-blur-md shadow-2xl flex flex-col items-center justify-center aspect-square transition-all duration-200">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center z-20 w-[min(29vw,27vh,320px)] p-3 sm:p-4 rounded-full border border-gold/30 bg-obsidian-elevated/90 backdrop-blur-md shadow-2xl flex flex-col items-center justify-center aspect-square transition-all duration-200">
               <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-gold">
                 {hoveredWheelCard ? `Arcana ${hoveredWheelCard.numerology.numeral}` : 'Major Arcana'}
               </span>
@@ -558,7 +558,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             </div>
 
             {/* 22 Major Arcana Cards Arranged in Outer Circular Ring */}
-            <div className="relative w-[min(68vw,68vh,560px)] h-[min(68vw,68vh,560px)] pointer-events-auto">
+            <div className="relative w-[min(80vw,76vh,900px)] h-[min(80vw,76vh,900px)] pointer-events-auto">
               {MAJOR_CARDS.map((card, index) => {
                 const theta = -Math.PI / 2 + (index * 2 * Math.PI) / 22;
                 const radiusPercent = 38.5;
@@ -589,7 +589,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                       ['--ty' as string]: '0px',
                       ['--trot' as string]: `${rotDeg}deg`,
                     }}
-                    className="absolute card-wheel-item w-9 sm:w-11 md:w-13 aspect-tarot rounded-lg overflow-hidden border border-gold/40 hover:border-gold shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
+                    className="absolute card-wheel-item w-[8.4%] aspect-tarot rounded-lg overflow-hidden border border-gold/40 hover:border-gold shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
                   >
                     <TarotCardView
                       card={card}
@@ -767,12 +767,12 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
   return (
     <section
       aria-label={`Detailed inspection of ${selectedCard.name}`}
-      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative overflow-hidden"
+      className="w-full min-h-screen max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 pt-16 pb-6 flex flex-col gap-4 relative overflow-hidden"
     >
       {/* Background Rotating Magic Circle Pattern */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         <MagicCircleBackground
-          size="min(95vw, 780px)"
+          size="min(95vw, 92vh, 1100px)"
           className="opacity-20 text-gold"
           rotate
         />
@@ -888,7 +888,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
       </header>
 
       {/* ORBITAL 3-COLUMN LAYOUT: West Floating Lore Arc | Center Card | East Floating Symbolism Arc */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 py-2">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 py-2 flex-1">
         {/* WEST / LEFT ARC: Floating Archetype, Numerology & Meaning */}
         <div className="lg:col-span-4 order-2 lg:order-1 space-y-5 deck-card-deal">
           {/* Floating Archetype & Numerology Header */}
@@ -954,7 +954,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
         <div className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center gap-3">
           <div
             ref={centerCardRef}
-            className="w-full max-w-[320px] sm:max-w-[340px] relative z-20"
+            style={{ width: 'min(88vw, 38vh, 520px)' }} className="relative z-20"
           >
             <TarotCardView
               card={selectedCard}
