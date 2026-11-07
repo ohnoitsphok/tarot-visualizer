@@ -43,6 +43,37 @@
   }
 }
 
+@keyframes magic-circle-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-magic-circle-spin {
+  animation: magic-circle-spin 90s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.card-item-hover {
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+}
+
+.card-item-hover:hover,
+.card-item-hover:focus-visible {
+  transform: translate3d(0, -6px, 0);
+  box-shadow:
+    0 0 22px rgba(243, 217, 125, 0.45),
+    0 12px 26px rgba(0, 0, 0, 0.85);
+  border-color: rgba(212, 175, 55, 0.7);
+}
+
 .mystic-hover-interactive {
   transition:
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1),

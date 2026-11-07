@@ -145,21 +145,27 @@
     "semantic_hash": "36be74c07e697b082094fd92199d7c60"
   },
   "src/components/inspector/HotspotOverlay.tsx": {
-    "mtime": 1794080983.8497765,
-    "seen": 1794081107.7618752,
-    "ast_hash": "6a28fdad4fdc0e66e7c65436350cdce6",
-    "semantic_hash": "6a28fdad4fdc0e66e7c65436350cdce6"
+    "mtime": 1794082460.4439223,
+    "seen": 1794082963.1952982,
+    "ast_hash": "6d4f0fdacf82fa88adb5574cd5a6686a",
+    "semantic_hash": "6d4f0fdacf82fa88adb5574cd5a6686a"
   },
   "src/components/inspector/SymbolInspector.tsx": {
-    "mtime": 1794081070.5499039,
-    "seen": 1794081107.7618752,
-    "ast_hash": "787048833ff35b62dbef2ef84086e2c8",
-    "semantic_hash": "787048833ff35b62dbef2ef84086e2c8"
+    "mtime": 1794082563.9506433,
+    "seen": 1794082963.1952982,
+    "ast_hash": "bebc05c819f28e31c880582b574ea955",
+    "semantic_hash": "bebc05c819f28e31c880582b574ea955"
   },
   "scripts/fetch_cards.py": {
     "mtime": 1794062119.8871975,
     "seen": 1794062154.5913787,
     "ast_hash": "1d1b42b0542c92efd33994348971a8e0",
     "semantic_hash": "1d1b42b0542c92efd33994348971a8e0"
+  },
+  "src/components/common/MagicCircleBackground.tsx": {
+    "mtime": 1794082415.5928328,
+    "seen": 1794082963.194298,
+    "ast_hash": "6558b826fb19634c5650726bccb456e8",
+    "semantic_hash": "6558b826fb19634c5650726bccb456e8"
   }
 }

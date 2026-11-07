@@ -1,46 +1,6 @@
 {
   "communities": {
     "0": [
-      "package_dependencies",
-      "package_dependencies_lucide_react",
-      "package_dependencies_react",
-      "package_dependencies_react_dom",
-      "ref_lucide_react",
-      "ref_react",
-      "ref_react_dom",
-      "src_app",
-      "src_app_app",
-      "src_components_common_header",
-      "src_components_common_header_display_order",
-      "src_components_common_header_header",
-      "src_components_common_header_headerbase",
-      "src_components_common_header_headerprops",
-      "src_components_common_header_tab_config",
-      "src_components_common_tarotcardview",
-      "src_components_common_tarotcardview_tarotcardview",
-      "src_components_common_tarotcardview_tarotcardviewbase",
-      "src_components_common_tarotcardview_tarotcardviewprops",
-      "src_components_inspector_hotspotoverlay_hotspotoverlay",
-      "src_components_inspector_symbolinspector",
-      "src_components_inspector_symbolinspector_deckfilter",
-      "src_components_inspector_symbolinspector_filter_options",
-      "src_components_inspector_symbolinspector_flyoriginrect",
-      "src_components_inspector_symbolinspector_inspectorstage",
-      "src_components_inspector_symbolinspector_major_cards",
-      "src_components_inspector_symbolinspector_minor_cards",
-      "src_components_inspector_symbolinspector_search_index",
-      "src_components_inspector_symbolinspector_symbolinspector",
-      "src_components_inspector_symbolinspector_symbolinspectorprops",
-      "src_components_inspector_symbolinspector_triggerhaptic",
-      "src_index",
-      "src_main",
-      "src_main_rootelement",
-      "src_types_index_app_tabs",
-      "src_types_index_apptab",
-      "src_types_index_cardorientation",
-      "src_types_index_tarotcard"
-    ],
-    "1": [
       "package_devdependencies_vitest",
       "ref_node_fs",
       "ref_node_path",
@@ -63,7 +23,6 @@
       "src_tests_datavalidation_test_dirname",
       "src_tests_datavalidation_test_filename",
       "src_tests_scaffolding_test",
-      "src_types_index",
       "src_types_index_cards_per_suit",
       "src_types_index_elements",
       "src_types_index_initial_study_progress",
@@ -78,7 +37,7 @@
       "src_types_index_usageguidesection",
       "vitest_config"
     ],
-    "2": [
+    "1": [
       "src_types_tarot",
       "src_types_tarot_arcana",
       "src_types_tarot_arcana_types",
@@ -114,7 +73,7 @@
       "src_types_tarot_usageprinciple",
       "src_types_tarot_usagetopiccategory"
     ],
-    "3": [
+    "2": [
       "package",
       "package_devdependencies",
       "package_devdependencies_autoprefixer",
@@ -141,7 +100,7 @@
       "ref_vitejs_plugin_react",
       "vite_config"
     ],
-    "4": [
+    "3": [
       "src_data_cards",
       "src_data_cards_cap",
       "src_data_cards_court_themes",
@@ -160,11 +119,35 @@
       "src_data_minorarcana_minor_rows",
       "src_data_minorarcana_minorrow",
       "src_data_minorarcana_suit_info",
+      "src_types_index",
       "src_types_index_cardmeanings",
       "src_types_index_cardnumerology",
       "src_types_index_cardrank",
       "src_types_index_court_ranks",
       "src_types_index_suit"
+    ],
+    "4": [
+      "package_dependencies",
+      "package_dependencies_lucide_react",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "ref_lucide_react",
+      "ref_react",
+      "ref_react_dom",
+      "src_app",
+      "src_app_app",
+      "src_components_common_header",
+      "src_components_common_header_display_order",
+      "src_components_common_header_header",
+      "src_components_common_header_headerbase",
+      "src_components_common_header_headerprops",
+      "src_components_common_header_tab_config",
+      "src_components_inspector_symbolinspector_inspectorstage",
+      "src_index",
+      "src_main",
+      "src_main_rootelement",
+      "src_types_index_app_tabs",
+      "src_types_index_apptab"
     ],
     "5": [
       "tsconfig",
@@ -190,6 +173,26 @@
       "tsconfig_references"
     ],
     "6": [
+      "src_components_common_magiccirclebackground_magiccirclebackground",
+      "src_components_common_tarotcardview",
+      "src_components_common_tarotcardview_tarotcardview",
+      "src_components_common_tarotcardview_tarotcardviewbase",
+      "src_components_common_tarotcardview_tarotcardviewprops",
+      "src_components_inspector_hotspotoverlay_hotspotoverlay",
+      "src_components_inspector_symbolinspector",
+      "src_components_inspector_symbolinspector_deckfilter",
+      "src_components_inspector_symbolinspector_filter_options",
+      "src_components_inspector_symbolinspector_flyoriginrect",
+      "src_components_inspector_symbolinspector_major_cards",
+      "src_components_inspector_symbolinspector_minor_cards",
+      "src_components_inspector_symbolinspector_search_index",
+      "src_components_inspector_symbolinspector_symbolinspector",
+      "src_components_inspector_symbolinspector_symbolinspectorprops",
+      "src_components_inspector_symbolinspector_triggerhaptic",
+      "src_types_index_cardorientation",
+      "src_types_index_tarotcard"
+    ],
+    "7": [
       "src_types_study",
       "src_types_study_app_tabs",
       "src_types_study_apptab",
@@ -208,7 +211,7 @@
       "src_types_study_studyprogressstate",
       "src_types_tarot_cardorientation"
     ],
-    "7": [
+    "8": [
       "src_components_inspector_hotspotoverlay",
       "src_components_inspector_hotspotoverlay_buildsmoothcontourpath",
       "src_components_inspector_hotspotoverlay_category_badges",
@@ -225,7 +228,7 @@
       "src_types_index_hotspotpoint",
       "src_types_index_symbolhotspot"
     ],
-    "8": [
+    "9": [
       "tsconfig_node",
       "tsconfig_node_compileroptions",
       "tsconfig_node_compileroptions_allowsyntheticdefaultimports",
@@ -242,7 +245,21 @@
       "tsconfig_node_compileroptions_tsbuildinfofile",
       "tsconfig_node_include"
     ],
-    "9": [
+    "10": [
+      "src_components_common_magiccirclebackground",
+      "src_components_common_magiccirclebackground_inner_star_diagonals",
+      "src_components_common_magiccirclebackground_inner_star_points",
+      "src_components_common_magiccirclebackground_magiccirclebackgroundbase",
+      "src_components_common_magiccirclebackground_magiccirclebackgroundprops",
+      "src_components_common_magiccirclebackground_makesquarepoints",
+      "src_components_common_magiccirclebackground_middle_ticks",
+      "src_components_common_magiccirclebackground_outer_ticks",
+      "src_components_common_magiccirclebackground_sq1_inner",
+      "src_components_common_magiccirclebackground_sq1_outer",
+      "src_components_common_magiccirclebackground_sq2_inner",
+      "src_components_common_magiccirclebackground_sq2_outer"
+    ],
+    "11": [
       "concurrent_futures",
       "os",
       "scripts_fetch_cards",
@@ -253,7 +270,7 @@
       "sys",
       "urllib_request"
     ],
-    "10": [
+    "12": [
       "package_scripts",
       "package_scripts_build",
       "package_scripts_dev",
@@ -263,31 +280,33 @@
       "package_scripts_typecheck",
       "package_scripts_verify"
     ],
-    "11": [
+    "13": [
       "postcss_config"
     ],
-    "12": [
+    "14": [
       "scripts_start_brave_debug"
     ],
-    "13": [
+    "15": [
       "tailwind_config"
     ]
   },
   "cohesion": {
-    "0": 0.08250355618776671,
-    "1": 0.0761904761904762,
-    "2": 0.058823529411764705,
-    "3": 0.11333333333333333,
-    "4": 0.12648221343873517,
+    "0": 0.07394957983193277,
+    "1": 0.058823529411764705,
+    "2": 0.11333333333333333,
+    "3": 0.12318840579710146,
+    "4": 0.1380952380952381,
     "5": 0.09523809523809523,
-    "6": 0.125,
-    "7": 0.17142857142857143,
-    "8": 0.13333333333333333,
-    "9": 0.3611111111111111,
-    "10": 0.25,
-    "11": 1.0,
-    "12": 1.0,
-    "13": 1.0
+    "6": 0.1568627450980392,
+    "7": 0.125,
+    "8": 0.17142857142857143,
+    "9": 0.13333333333333333,
+    "10": 0.16666666666666666,
+    "11": 0.3611111111111111,
+    "12": 0.25,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0
   },
   "gods": [
     {
@@ -303,7 +322,7 @@
     {
       "id": "ref_react",
       "label": "react",
-      "degree": 8
+      "degree": 9
     },
     {
       "id": "package_scripts",
@@ -313,12 +332,7 @@
     {
       "id": "src_components_inspector_symbolinspector_symbolinspector",
       "label": "SymbolInspector()",
-      "degree": 6
-    },
-    {
-      "id": "ref_lucide_react",
-      "label": "lucide-react",
-      "degree": 5
+      "degree": 7
     },
     {
       "id": "ref_vitest",
@@ -331,17 +345,33 @@
       "degree": 5
     },
     {
-      "id": "src_app_app",
-      "label": "App()",
-      "degree": 4
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "degree": 5
     },
     {
       "id": "src_data_deepfreeze_deepfreeze",
       "label": "deepFreeze()",
       "degree": 4
+    },
+    {
+      "id": "scripts_fetch_cards_fetch_card",
+      "label": "fetch_card()",
+      "degree": 4
     }
   ],
   "surprises": [
+    {
+      "source": "App()",
+      "target": "SymbolInspector()",
+      "source_files": [
+        "src/App.tsx",
+        "src/components/inspector/SymbolInspector.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
     {
       "source": "QuizQuestion",
       "target": "CardOrientation",
@@ -365,11 +395,11 @@
       "why": "cross-file semantic connection"
     },
     {
-      "source": "App()",
-      "target": "SymbolInspector()",
+      "source": "SymbolInspector()",
+      "target": "MagicCircleBackground",
       "source_files": [
-        "src/App.tsx",
-        "src/components/inspector/SymbolInspector.tsx"
+        "src/components/inspector/SymbolInspector.tsx",
+        "src/components/common/MagicCircleBackground.tsx"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
@@ -385,54 +415,43 @@
       "confidence": "EXTRACTED",
       "relation": "calls",
       "why": "cross-file semantic connection"
-    },
-    {
-      "source": "SymbolInspector()",
-      "target": "HotspotOverlay",
-      "source_files": [
-        "src/components/inspector/SymbolInspector.tsx",
-        "src/components/inspector/HotspotOverlay.tsx"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "cross-file semantic connection"
     }
   ],
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `react` connect `tarot.ts` to `App.tsx`, `tailwind.config.js`?",
-      "why": "High betweenness centrality (0.089) - this node is a cross-community bridge."
+      "question": "Why does `react` connect `compilerOptions` to `postcss.config.js`, `compilerOptions`, `tailwind.config.js`, `scripts`?",
+      "why": "High betweenness centrality (0.102) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `tarot.ts` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.08250355618776671 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.07394957983193277 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `vitest` connect `package.json` to `App.tsx`?",
-      "why": "High betweenness centrality (0.073) - this node is a cross-community bridge."
+      "question": "Why does `vitest` connect `tarot.ts` to `compilerOptions`?",
+      "why": "High betweenness centrality (0.066) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `package.json` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.0761904761904762 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `lucide-react` connect `tarot.ts` to `App.tsx`?",
-      "why": "High betweenness centrality (0.051) - this node is a cross-community bridge."
+      "question": "Why does `lucide-react` connect `compilerOptions` to `compilerOptions`, `scripts`?",
+      "why": "High betweenness centrality (0.046) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `compilerOptions` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.11333333333333333 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
       "question": "Should `App.tsx` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.11333333333333333 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.12318840579710146 - nodes in this community are weakly interconnected."
     }
   ]
 }

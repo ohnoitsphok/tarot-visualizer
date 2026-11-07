@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { CARD_BY_ID, CARDS } from '../../data/cards';
 import { SUITS, type CardOrientation, type Suit, type SymbolHotspot, type TarotCard } from '../../types';
+import { MagicCircleBackground } from '../common/MagicCircleBackground';
 import { TarotCardView } from '../common/TarotCardView';
 import { HotspotOverlay } from './HotspotOverlay';
 
@@ -211,21 +212,24 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
     ],
   );
 
-  // STAGE 1: CLOSED 3D TAROT DECK
+  // STAGE 1: CLOSED 3D TAROT DECK WITH ROTATING MAGIC CIRCLE BACKGROUND
   if (stage === 'deck') {
     return (
       <section
         aria-label="Tarot Deck Sanctuary"
         className="w-full min-h-[calc(100vh-8.5rem)] flex flex-col items-center justify-center px-4 py-10 relative overflow-hidden"
       >
-        {/* Ambient radial sanctuary glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute w-[420px] h-[420px] rounded-full bg-gold/10 blur-3xl"
-        />
+        {/* Faint Magic Circle Pattern Background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <MagicCircleBackground
+            size="min(88vw, 640px)"
+            className="opacity-20 text-gold"
+            rotate
+          />
+        </div>
 
         <div className="text-center max-w-xl mx-auto mb-8 relative z-10 space-y-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-serif uppercase tracking-widest text-gold-light bg-gold/10 border border-gold/30">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-serif uppercase tracking-widest text-gold-light bg-gold/10 border border-gold/30 backdrop-blur-sm">
             <Sparkles className="h-3 w-3 text-gold" aria-hidden="true" />
             Rider-Waite-Smith Sanctuary
           </span>
@@ -233,12 +237,12 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             The 78 Keys of Wisdom
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-            Hover over the deck to attune its resonance. Click or tap the deck to unseal all 78
-            cards and inspect their esoteric symbolism.
+            Hover over the sealed deck to attune its mystical energy. Click or tap to break the seal
+            and open the cards.
           </p>
         </div>
 
-        {/* Interactive 3D Layered Deck Button */}
+        {/* Interactive 3D Layered Deck Button (Keeps Tremor on Deck) */}
         <button
           type="button"
           onClick={handleOpenDeck}
@@ -266,7 +270,6 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
           {/* Top Ornate Deck Back */}
           <div className="relative inset-0 w-full h-full rounded-2xl border-2 border-gold/70 bg-gradient-to-b from-obsidian-elevated via-obsidian-surface to-obsidian p-3.5 shadow-2xl flex flex-col justify-between overflow-hidden">
             <div className="w-full h-full rounded-xl border border-gold/40 p-4 flex flex-col items-center justify-between relative bg-obsidian/70">
-              {/* Corner Celestial Sigils */}
               <span className="absolute top-2.5 left-2.5 text-gold/70 text-xs" aria-hidden="true">
                 ✦
               </span>
@@ -276,10 +279,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               <span className="absolute bottom-2.5 left-2.5 text-gold/70 text-xs" aria-hidden="true">
                 ✦
               </span>
-              <span
-                className="absolute bottom-2.5 right-2.5 text-gold/70 text-xs"
-                aria-hidden="true"
-              >
+              <span className="absolute bottom-2.5 right-2.5 text-gold/70 text-xs" aria-hidden="true">
                 ✦
               </span>
 
@@ -310,10 +310,10 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
           </div>
         </button>
 
-        <div className="mt-8 flex items-center gap-4 text-xs text-slate-300 relative z-10">
+        <div className="mt-8 flex items-center gap-4 text-xs text-slate-300 relative z-10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-gold/15 bg-obsidian/50">
           <span className="flex items-center gap-1.5">
             <Layers className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-            22 Major Arcana with SVG Contour Hotspots
+            22 Major Arcana with Alchemical Outlines
           </span>
           <span aria-hidden="true">&bull;</span>
           <span>56 Minor Arcana</span>
@@ -322,7 +322,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
     );
   }
 
-  // STAGE 2: OPENED INDIVIDUAL CARD LIST / GALLERY
+  // STAGE 2: OPENED INDIVIDUAL CARD GALLERY (SMOOTH FLOAT HOVER, ZERO TREMOR JITTER)
   if (stage === 'grid') {
     return (
       <section
@@ -389,7 +389,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
           </div>
         </div>
 
-        {/* Card Grid */}
+        {/* Card Grid with Smooth Float Hover (card-item-hover) */}
         {filteredCards.length === 0 ? (
           <div className="text-center py-16 bg-obsidian-surface/50 rounded-xl border border-gold/15">
             <p className="text-sm text-slate-300 font-serif">
@@ -415,7 +415,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                 onClick={(e) => handleSelectCardFromGrid(card, e)}
                 aria-label={`Inspect ${card.name}`}
                 style={{ animationDelay: `${Math.min(index * 16, 320)}ms` }}
-                className="group flex flex-col items-center text-center rounded-xl p-2 bg-obsidian-surface/60 border border-gold/20 hover:border-gold/60 focus:outline-none focus:ring-2 focus:ring-gold mystic-hover-interactive deck-card-deal"
+                className="group flex flex-col items-center text-center rounded-xl p-2 bg-obsidian-surface/60 border border-gold/20 hover:border-gold/60 focus:outline-none focus:ring-2 focus:ring-gold card-item-hover deck-card-deal"
               >
                 <div className="w-full overflow-hidden rounded-lg">
                   <TarotCardView
@@ -443,14 +443,23 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
     );
   }
 
-  // STAGE 3: FLYING CENTER CARD & BALANCED SIDE-WINGS DETAIL VIEW
+  // STAGE 3: ORBITAL FLOATING TEXT & MENUS WRAPPING AROUND THE ROTATING MAGIC CIRCLE
   return (
     <section
       aria-label={`Detailed inspection of ${selectedCard.name}`}
-      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative overflow-hidden"
     >
-      {/* Top Navigation & Card Switcher Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-obsidian-surface/90 border border-gold/25 p-3.5 rounded-xl shadow-lg relative z-10">
+      {/* Background Rotating Magic Circle Pattern */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+        <MagicCircleBackground
+          size="min(95vw, 780px)"
+          className="opacity-20 text-gold"
+          rotate
+        />
+      </div>
+
+      {/* CELESTIAL TOP ARC: Floating Header, Navigation Chevrons, & Seal Buttons */}
+      <header className="relative z-10 flex flex-wrap items-center justify-between gap-4 py-2 border-b border-gold/20 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -459,10 +468,10 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               setHoveredHotspotId(null);
               updateStage('grid');
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/15 hover:bg-gold/25 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-serif tracking-wider uppercase text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <ArrowLeft className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-            <span>Back to Cards</span>
+            <span>Deck Gallery</span>
           </button>
 
           <button
@@ -472,193 +481,191 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               setHoveredHotspotId(null);
               updateStage('deck');
             }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-slate-300 hover:text-slate-100 bg-obsidian-elevated border border-gold/20 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs text-slate-300 hover:text-slate-100 bg-obsidian/70 border border-gold/20 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <Layers className="h-3.5 w-3.5 text-gold/80" aria-hidden="true" />
             <span className="hidden sm:inline">Seal Deck</span>
           </button>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Centered Celestial Title Orb */}
+        <div className="flex items-center gap-3 text-center">
           <button
             type="button"
             onClick={() => stepCard(-1)}
             aria-label="Previous card"
-            className="p-1.5 rounded-lg bg-obsidian-elevated border border-gold/25 text-slate-200 hover:text-gold-light focus:outline-none focus:ring-2 focus:ring-gold"
+            className="p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           </button>
 
-          <label htmlFor="card-selector" className="sr-only">
-            Select card
-          </label>
-          <select
-            id="card-selector"
-            value={selectedCard.id}
-            onChange={(e) => {
-              setSelectedCardId(e.target.value);
-              setActiveHotspotId(null);
-              setHoveredHotspotId(null);
-            }}
-            className="bg-obsidian-elevated border border-gold/30 rounded-lg px-3 py-1.5 text-xs sm:text-sm text-slate-100 font-serif focus:outline-none focus:ring-2 focus:ring-gold max-w-[210px] sm:max-w-xs"
-          >
-            <optgroup label="Major Arcana">
-              {MAJOR_CARDS.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.numerology.numeral}. {c.name}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label="Minor Arcana">
-              {MINOR_CARDS.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </optgroup>
-          </select>
+          <div className="flex flex-col items-center">
+            <span className="text-[10px] font-serif uppercase tracking-[0.2em] text-gold/90">
+              {selectedCard.arcana} Arcana &bull; {selectedCard.numerology.numeral}
+            </span>
+            <div className="relative">
+              <label htmlFor="card-selector" className="sr-only">
+                Select card
+              </label>
+              <select
+                id="card-selector"
+                value={selectedCard.id}
+                onChange={(e) => {
+                  setSelectedCardId(e.target.value);
+                  setActiveHotspotId(null);
+                  setHoveredHotspotId(null);
+                }}
+                className="bg-transparent border-none text-base sm:text-xl font-serif font-semibold text-gold-light text-center focus:outline-none focus:ring-1 focus:ring-gold cursor-pointer"
+              >
+                <optgroup label="Major Arcana">
+                  {MAJOR_CARDS.map((c) => (
+                    <option key={c.id} value={c.id} className="bg-obsidian text-slate-100 font-serif">
+                      {c.numerology.numeral}. {c.name}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Minor Arcana">
+                  {MINOR_CARDS.map((c) => (
+                    <option key={c.id} value={c.id} className="bg-obsidian text-slate-100 font-serif">
+                      {c.name}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+            </div>
+          </div>
 
           <button
             type="button"
             onClick={() => stepCard(1)}
             aria-label="Next card"
-            className="p-1.5 rounded-lg bg-obsidian-elevated border border-gold/25 text-slate-200 hover:text-gold-light focus:outline-none focus:ring-2 focus:ring-gold"
+            className="p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
 
+        {/* Right Element & Astrological Celestial Pill */}
         <div className="flex items-center gap-2">
+          <div className="hidden sm:flex flex-col text-right">
+            <span className="text-xs text-slate-200 capitalize font-serif">{selectedCard.element}</span>
+            <span className="text-[10px] font-mono text-purple-300">{selectedCard.astrology}</span>
+          </div>
           <button
             type="button"
             aria-pressed={showFineGrid}
             onClick={() => setShowFineGrid((prev) => !prev)}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-serif border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
               showFineGrid
                 ? 'bg-gold/15 text-gold-light border-gold/40'
-                : 'bg-obsidian-elevated text-slate-300 border-gold/15'
+                : 'bg-obsidian/70 text-slate-300 border-gold/15'
             }`}
           >
-            <Grid className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-            <span>Fine Grid: {showFineGrid ? 'On' : 'Off'}</span>
+            <Grid className="h-3 w-3 text-gold" aria-hidden="true" />
+            <span>Grid {showFineGrid ? 'On' : 'Off'}</span>
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Main 3-Column Stage: Left Lore Wing | Enlarged Center Card | Right Symbolism Wing */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start relative z-10">
-        {/* LEFT WING: Archetype, Numerology, Orientation & Meaning */}
-        <div className="lg:col-span-4 order-2 lg:order-1 space-y-4 deck-card-deal">
-          <div className="bg-obsidian-surface border border-gold/25 rounded-xl p-5 shadow-xl space-y-4">
-            <div className="flex items-start justify-between gap-2 border-b border-gold/15 pb-3.5">
-              <div>
-                <span className="text-[11px] font-serif text-gold tracking-widest uppercase">
-                  {selectedCard.arcana} Arcana &bull; {selectedCard.numerology.numeral}
-                </span>
-                <h2 className="text-2xl font-serif font-semibold text-gold-light tracking-wide mt-0.5">
-                  {selectedCard.name}
-                </h2>
-              </div>
-              <div className="text-right shrink-0">
-                <span className="text-xs text-slate-200 capitalize block font-medium">
-                  {selectedCard.element}
-                </span>
-                <span className="text-xs font-mono text-purple-300">{selectedCard.astrology}</span>
-              </div>
+      {/* ORBITAL 3-COLUMN LAYOUT: West Floating Lore Arc | Center Card | East Floating Symbolism Arc */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 py-2">
+        {/* WEST / LEFT ARC: Floating Archetype, Numerology & Meaning */}
+        <div className="lg:col-span-4 order-2 lg:order-1 space-y-5 deck-card-deal">
+          {/* Floating Archetype & Numerology Header */}
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-gold">
+              <span className="text-xs font-serif tracking-[0.25em] uppercase">Archetype &bull; Theme</span>
+              <span className="flex-1 h-px bg-gradient-to-r from-gold/40 to-transparent" />
+            </div>
+            <p className="text-lg font-serif italic text-gold-light">
+              &ldquo;{selectedCard.archetype}&rdquo;
+            </p>
+            <p className="text-xs text-slate-300">
+              Numerology: <strong className="text-slate-100">{selectedCard.numerology.theme || 'Universal Cycle'}</strong>
+            </p>
+          </div>
+
+          {/* Floating Meaning & Interpretation Arc */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between gap-2 text-gold">
+              <span className="text-xs font-serif tracking-[0.2em] uppercase flex items-center gap-1.5">
+                <BookOpen className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
+                {isReversed ? 'Reversed Interpretation' : 'Upright Interpretation'}
+              </span>
+              <span className="flex-1 h-px bg-gradient-to-r from-gold/30 to-transparent ml-2" />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-obsidian-elevated/80 border border-gold/15 p-3 rounded-lg">
-                <span className="text-[10px] tracking-wider uppercase text-slate-300 block mb-0.5">
-                  Archetype
-                </span>
-                <p className="text-xs sm:text-sm text-gold-light font-serif italic">
-                  {selectedCard.archetype}
-                </p>
-              </div>
-              <div className="bg-obsidian-elevated/80 border border-gold/15 p-3 rounded-lg">
-                <span className="text-[10px] tracking-wider uppercase text-slate-300 block mb-0.5">
-                  Numerology
-                </span>
-                <p className="text-xs sm:text-sm text-slate-100">
-                  {selectedCard.numerology.theme || 'Universal Cycle'}
-                </p>
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans">
+              {currentMeaning.fullMeaning}
+            </p>
 
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between gap-2">
-                <h3 className="text-xs font-serif uppercase tracking-wider text-gold flex items-center gap-1.5">
-                  <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
-                  {isReversed ? 'Reversed Meaning' : 'Upright Meaning'}
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-100 leading-relaxed bg-obsidian/60 p-3.5 rounded-lg border border-gold/15">
-                {currentMeaning.fullMeaning}
-              </p>
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {currentMeaning.keywords.map((kw) => (
-                  <span
-                    key={kw}
-                    className="px-2 py-0.5 rounded-md text-[11px] capitalize bg-obsidian-elevated border border-gold/20 text-slate-200"
-                  >
-                    {kw}
-                  </span>
-                ))}
-              </div>
+            {/* Constellation Keyword Pills */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {currentMeaning.keywords.map((kw) => (
+                <span
+                  key={kw}
+                  className="px-2.5 py-0.5 rounded-full text-[11px] capitalize bg-obsidian/60 border border-gold/25 text-gold-light/90 shadow-sm backdrop-blur-sm"
+                >
+                  ✦ {kw}
+                </span>
+              ))}
             </div>
+          </div>
 
+          {/* Floating Reversal Toggle */}
+          <div className="pt-2">
             <button
               type="button"
               onClick={() => setOrientation((prev) => (prev === 'upright' ? 'reversed' : 'upright'))}
               aria-pressed={isReversed}
-              className={`w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
+              className={`inline-flex items-center gap-2 py-2 px-4 rounded-full text-xs font-serif tracking-wider uppercase transition-colors focus:outline-none focus:ring-2 focus:ring-gold backdrop-blur-sm ${
                 isReversed
-                  ? 'bg-red-950/85 text-red-200 border border-red-700/60'
-                  : 'bg-gold/15 text-gold-light border border-gold/35 hover:bg-gold/25'
+                  ? 'bg-red-950/80 text-red-200 border border-red-700/60 shadow-lg shadow-red-950/40'
+                  : 'bg-gold/15 text-gold-light border border-gold/40 hover:bg-gold/25'
               }`}
             >
-              <RotateCw className="h-3.5 w-3.5" aria-hidden="true" />
+              <RotateCw className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
               <span>{isReversed ? 'Reset to Upright' : 'Invert to Reversed'}</span>
             </button>
           </div>
         </div>
 
-        {/* CENTER STAGE: Enlarged Flying Card with Fine Grid & SVG Contour Outline Glow */}
+        {/* CENTER STAGE: Enlarged Flying Card in the Magic Circle Core */}
         <div className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center gap-3">
           <div
             ref={centerCardRef}
-            className="w-full max-w-[320px] sm:max-w-[350px] relative"
+            className="w-full max-w-[320px] sm:max-w-[340px] relative z-20"
           >
             <TarotCardView
               card={selectedCard}
               orientation={orientation}
               overlay={hotspotOverlay}
               loading="eager"
-              className="w-full"
+              className="w-full shadow-2xl shadow-black/90"
             />
           </div>
 
-          <p className="text-[11px] text-slate-300 text-center max-w-xs flex items-center justify-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-gold shrink-0" aria-hidden="true" />
+          <p className="text-[11px] text-gold-light/80 text-center max-w-xs flex items-center justify-center gap-1.5 font-serif">
+            <Sparkles className="h-3 w-3 text-gold shrink-0" aria-hidden="true" />
             <span>
               {selectedCard.hotspots.length > 0
-                ? 'Hover or press a contoured zone on the card to illuminate its outline glow.'
-                : 'Minor Arcana card — switch to any Major Arcana card for interactive symbol contours.'}
+                ? 'Tap or hover contoured card zones to illuminate alchemical outlines.'
+                : 'Minor Arcana card — select any Major Arcana card for alchemical contours.'}
             </span>
           </p>
         </div>
 
-        {/* RIGHT WING: Visual Symbolism Outline Breakdown */}
+        {/* EAST / RIGHT ARC: Floating Symbolism Contours & Esoteric Lore */}
         <div className="lg:col-span-4 order-3 space-y-4 deck-card-deal">
-          <div className="bg-obsidian-surface border border-gold/25 rounded-xl p-5 shadow-xl space-y-3.5">
-            <div className="flex items-center justify-between gap-2 border-b border-gold/15 pb-3">
-              <h3 className="text-sm font-serif font-semibold text-gold-light tracking-wide flex items-center gap-2">
-                <Eye className="h-4 w-4 text-gold" aria-hidden="true" />
-                Symbolism Contours
-              </h3>
-              <span className="text-[11px] text-slate-300 font-mono">
-                {selectedCard.hotspots.length} Regions
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-2 text-gold">
+              <span className="text-xs font-serif tracking-[0.25em] uppercase flex items-center gap-1.5">
+                <Eye className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
+                Alchemical Contours
+              </span>
+              <span className="flex-1 h-px bg-gradient-to-r from-gold/30 to-transparent ml-2" />
+              <span className="text-[10px] font-mono text-gold-light/80">
+                {selectedCard.hotspots.length} Symbols
               </span>
             </div>
 
@@ -684,34 +691,31 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                       onBlur={() =>
                         setHoveredHotspotId((prev) => (prev === spot.id ? null : prev))
                       }
-                      className={`w-full text-left p-3.5 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
+                      className={`w-full text-left p-3 rounded-xl border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold backdrop-blur-sm ${
                         isSelected || isHovered
-                          ? 'border-gold bg-gold/15 shadow-lg ring-1 ring-gold/60'
-                          : 'border-gold/15 bg-obsidian-elevated/50 hover:bg-obsidian-elevated hover:border-gold/35'
+                          ? 'border-gold bg-gold/15 shadow-[0_0_18px_rgba(212,175,55,0.35)] ring-1 ring-gold/60 translate-x-1'
+                          : 'border-gold/20 bg-obsidian/60 hover:bg-obsidian-elevated/70 hover:border-gold/40'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="font-serif text-sm font-medium text-gold-light flex items-center gap-2">
+                        <span className="font-serif text-sm font-medium text-gold-light flex items-center gap-1.5">
                           <span
-                            className={`w-2 h-2 rounded-sm border ${
-                              isSelected || isHovered
-                                ? 'bg-gold-light border-white shadow-[0_0_8px_#f3d97d]'
-                                : 'bg-gold/50 border-gold'
+                            className={`text-xs transition-transform ${
+                              isSelected || isHovered ? 'scale-125 text-white' : 'text-gold'
                             }`}
                             aria-hidden="true"
-                          />
+                          >
+                            ✦
+                          </span>
                           {spot.label}
                         </span>
-                        <span className="text-[10px] px-2 py-0.5 rounded capitalize bg-obsidian border border-gold/25 text-slate-200 font-mono">
+                        <span className="text-[9px] px-2 py-0.5 rounded-full capitalize bg-obsidian-elevated border border-gold/30 text-slate-300 font-mono">
                           {spot.category}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-200 leading-relaxed mb-2">{spot.summary}</p>
-                      <div className="bg-obsidian/70 p-2 rounded border border-gold/15">
-                        <span className="text-[10px] tracking-wider uppercase text-gold block mb-0.5">
-                          Esoteric Meaning
-                        </span>
-                        <p className="text-xs text-slate-200 italic">
+                      <p className="text-xs text-slate-200 leading-relaxed mb-1.5">{spot.summary}</p>
+                      <div className="border-t border-gold/15 pt-1">
+                        <p className="text-[11px] text-gold-light/90 italic">
                           &ldquo;{spot.esotericMeaning}&rdquo;
                         </p>
                       </div>
@@ -720,12 +724,10 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                 })}
               </div>
             ) : (
-              <div className="space-y-3 py-4 text-xs text-slate-200">
+              <div className="py-4 text-xs text-slate-200 space-y-2">
                 <p className="leading-relaxed">
                   <strong>{selectedCard.name}</strong> belongs to the{' '}
-                  <span className="capitalize text-gold-light">{selectedCard.suit}</span> suit (
-                  <span className="capitalize">{selectedCard.element}</span> element,{' '}
-                  {selectedCard.astrology}).
+                  <span className="capitalize text-gold-light">{selectedCard.suit}</span> suit.
                 </p>
                 <button
                   type="button"
@@ -733,9 +735,9 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                     setSelectedCardId('the-fool');
                     setActiveHotspotId(null);
                   }}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/15 border border-gold/35 hover:bg-gold/25"
+                  className="px-3 py-1.5 rounded-full text-xs font-serif text-gold-light bg-gold/15 border border-gold/35 hover:bg-gold/25"
                 >
-                  Inspect Major Arcana Contours
+                  Return to Major Arcana
                 </button>
               </div>
             )}

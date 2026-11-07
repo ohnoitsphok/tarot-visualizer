@@ -137,8 +137,9 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
         aria-label="Card symbolism interactive contour grid"
       >
         <defs>
+          {/* Global Reference Grid (Very Faint) */}
           <pattern
-            id={`fine-grid-minor-${uid}`}
+            id={`fine-grid-global-minor-${uid}`}
             width="2.5"
             height="2.5"
             patternUnits="userSpaceOnUse"
@@ -146,38 +147,58 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
             <path
               d="M 2.5 0 L 0 0 0 2.5"
               fill="none"
-              stroke="rgba(212, 175, 55, 0.13)"
-              strokeWidth="0.12"
+              stroke="rgba(212, 175, 55, 0.05)"
+              strokeWidth="0.1"
             />
           </pattern>
           <pattern
-            id={`fine-grid-major-${uid}`}
+            id={`fine-grid-global-major-${uid}`}
             width="10"
             height="10"
             patternUnits="userSpaceOnUse"
           >
-            <rect width="10" height="10" fill={`url(#fine-grid-minor-${uid})`} />
+            <rect width="10" height="10" fill={`url(#fine-grid-global-minor-${uid})`} />
             <path
               d="M 10 0 L 0 0 0 10"
               fill="none"
-              stroke="rgba(212, 175, 55, 0.24)"
-              strokeWidth="0.18"
+              stroke="rgba(212, 175, 55, 0.11)"
+              strokeWidth="0.15"
             />
           </pattern>
+
+          {/* Component-Contained Alchemical Micro-Grid (Ultra-Fine 1% Blueprint Mesh) */}
           <pattern
-            id={`fine-grid-active-${uid}`}
-            width="2"
-            height="2"
+            id={`fine-grid-micro-mesh-${uid}`}
+            width="1"
+            height="1"
             patternUnits="userSpaceOnUse"
           >
-            <rect width="2" height="2" fill="rgba(212, 175, 55, 0.14)" />
             <path
-              d="M 2 0 L 0 0 0 2"
+              d="M 1 0 L 0 0 0 1"
               fill="none"
-              stroke="rgba(254, 240, 138, 0.42)"
+              stroke="rgba(254, 240, 138, 0.28)"
+              strokeWidth="0.08"
+            />
+            {/* Coordinate intersection tick */}
+            <circle cx="0" cy="0" r="0.12" fill="rgba(254, 240, 138, 0.55)" />
+          </pattern>
+
+          <pattern
+            id={`fine-grid-active-${uid}`}
+            width="5"
+            height="5"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect width="5" height="5" fill={`url(#fine-grid-micro-mesh-${uid})`} />
+            <rect width="5" height="5" fill="rgba(212, 175, 55, 0.16)" />
+            <path
+              d="M 5 0 L 0 0 0 5"
+              fill="none"
+              stroke="rgba(254, 240, 138, 0.65)"
               strokeWidth="0.18"
             />
           </pattern>
+
           <filter
             id={`outline-glow-${uid}`}
             x="-30%"
@@ -185,8 +206,8 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
             width="160%"
             height="160%"
           >
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1.3" result="blurNear" />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" result="blurFar" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blurNear" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.6" result="blurFar" />
             <feMerge>
               <feMergeNode in="blurFar" />
               <feMergeNode in="blurNear" />
@@ -195,14 +216,14 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
           </filter>
         </defs>
 
-        {/* Fine Reference Coordinate Grid */}
+        {/* Global Reference Coordinate Grid (Ultra-Subtle) */}
         {showFineGrid && (
           <rect
             x="0"
             y="0"
             width="100"
             height="100"
-            fill={`url(#fine-grid-major-${uid})`}
+            fill={`url(#fine-grid-global-major-${uid})`}
             className="pointer-events-none"
           />
         )}
