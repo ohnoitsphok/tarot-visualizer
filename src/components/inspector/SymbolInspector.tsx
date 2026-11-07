@@ -805,20 +805,21 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
   return (
     <section
       aria-label={`Detailed inspection of ${selectedCard.name}`}
-      className="w-full min-h-screen max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 pt-4 pb-6 flex flex-col gap-4 relative overflow-hidden"
+      className="w-full min-h-screen max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-10 2xl:px-16 pt-3 sm:pt-4 pb-6 flex flex-col gap-4 relative overflow-hidden"
     >
       {/* Background Rotating Magic Circle Pattern */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         <MagicCircleBackground
-          size="min(95vw, 92vh, 1100px)"
+          size="min(95vw, 92vh, 1400px)"
           className="opacity-20 text-gold"
           rotate
         />
       </div>
 
-      {/* CELESTIAL TOP ARC: Floating Header, Navigation Chevrons, & Seal Buttons */}
-      <header className="relative z-10 grid grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-4 py-2 border-b border-gold/20 backdrop-blur-sm">
-        <div className="flex items-center gap-1 sm:gap-2 justify-self-start">
+      {/* CELESTIAL TOP ARC: Floating Header with Absolute Midpoint Lock */}
+      <header className="relative z-10 w-full flex items-center justify-between py-2 sm:py-3 border-b border-gold/20 backdrop-blur-sm min-h-[48px] sm:min-h-[58px]">
+        {/* Left Action Buttons */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 z-10 shrink-0">
           <button
             type="button"
             onClick={() => {
@@ -826,7 +827,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               setHoveredHotspotId(null);
               updateStage('grid');
             }}
-            className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-full text-xs font-serif tracking-wider uppercase text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-serif tracking-wider uppercase text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <ArrowLeft className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
             <span className="hidden sm:inline">Arcana Wheel</span>
@@ -849,28 +850,28 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
           </button>
         </div>
 
-        {/* Centered Celestial Title Orb */}
-        <div className="flex items-center justify-center gap-1 sm:gap-3 text-center justify-self-center min-w-0">
+        {/* Centered Celestial Title Orb - Mathematically locked to true 50% container midpoint */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 sm:gap-3 2xl:gap-4 text-center z-20 max-w-[50vw] sm:max-w-[45vw] pointer-events-auto">
           <button
             type="button"
             onClick={() => stepCard(-1)}
             aria-label="Previous card"
-            className="p-1 sm:p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold shrink-0"
+            className="p-1 sm:p-1.5 2xl:p-2 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold shrink-0 transition-colors"
           >
-            <ChevronLeft className="h-3.5 sm:h-4 w-3.5 sm:w-4" aria-hidden="true" />
+            <ChevronLeft className="h-3.5 sm:h-4 2xl:h-5 w-3.5 sm:w-4 2xl:w-5" aria-hidden="true" />
           </button>
 
           <div className="flex flex-col items-center min-w-0">
-            <span className="text-[9px] sm:text-[10px] font-serif uppercase tracking-[0.15em] sm:tracking-[0.2em] text-gold/90 block text-center truncate max-w-[170px] sm:max-w-none">
+            <span className="text-[9px] sm:text-[10px] 2xl:text-xs font-serif uppercase tracking-[0.15em] sm:tracking-[0.2em] 2xl:tracking-[0.25em] text-gold/90 block text-center truncate max-w-[170px] sm:max-w-none">
               {selectedCard.arcana === 'major'
                 ? `Major Arcana \u2022 ${selectedCard.numerology.numeral}`
                 : `${selectedCard.suit} \u2022 ${selectedCard.numerology.numeral}`}
             </span>
-            <div className="relative group inline-flex items-center justify-center rounded px-1 sm:px-1.5 py-0.5 focus-within:ring-2 focus-within:ring-gold/60 max-w-[170px] sm:max-w-none">
+            <div className="relative group inline-flex items-center justify-center rounded px-1 sm:px-1.5 2xl:px-2 py-0.5 focus-within:ring-2 focus-within:ring-gold/60 max-w-[170px] sm:max-w-none">
               <label htmlFor="card-selector" className="sr-only">
                 Select card
               </label>
-              <span className="text-sm sm:text-xl font-serif font-semibold text-gold-light group-hover:text-gold transition-colors text-center cursor-pointer select-none truncate">
+              <span className="text-sm sm:text-lg lg:text-xl 2xl:text-2xl font-serif font-semibold text-gold-light group-hover:text-gold transition-colors text-center cursor-pointer select-none truncate">
                 {selectedCard.arcana === 'major'
                   ? `${selectedCard.numerology.numeral}. ${selectedCard.name}`
                   : selectedCard.name}
@@ -908,29 +909,29 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             type="button"
             onClick={() => stepCard(1)}
             aria-label="Next card"
-            className="p-1 sm:p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold shrink-0"
+            className="p-1 sm:p-1.5 2xl:p-2 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold shrink-0 transition-colors"
           >
-            <ChevronRight className="h-3.5 sm:h-4 w-3.5 sm:w-4" aria-hidden="true" />
+            <ChevronRight className="h-3.5 sm:h-4 2xl:h-5 w-3.5 sm:w-4 2xl:w-5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Right Element & Astrological Celestial Pill */}
-        <div className="flex items-center gap-1 sm:gap-2 justify-self-end">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 z-10 shrink-0">
           <div className="hidden sm:flex flex-col text-right">
-            <span className="text-xs text-slate-200 capitalize font-serif">{selectedCard.element}</span>
-            <span className="text-[10px] font-mono text-purple-300">{selectedCard.astrology}</span>
+            <span className="text-xs 2xl:text-sm text-slate-200 capitalize font-serif">{selectedCard.element}</span>
+            <span className="text-[10px] 2xl:text-xs font-mono text-purple-300">{selectedCard.astrology}</span>
           </div>
           <button
             type="button"
             aria-pressed={showFineGrid}
             onClick={() => setShowFineGrid((prev) => !prev)}
-            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-full text-xs font-serif border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
+            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 2xl:px-3 py-1.5 rounded-full text-xs 2xl:text-sm font-serif border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
               showFineGrid
                 ? 'bg-gold/15 text-gold-light border-gold/40'
                 : 'bg-obsidian/70 text-slate-300 border-gold/15'
             }`}
           >
-            <Grid className="h-3 w-3 text-gold" aria-hidden="true" />
+            <Grid className="h-3 w-3 2xl:h-4 2xl:w-4 text-gold" aria-hidden="true" />
             <span className="hidden sm:inline">Grid {showFineGrid ? 'On' : 'Off'}</span>
             <span className="inline sm:hidden">{showFineGrid ? 'Grid' : 'Off'}</span>
           </button>
@@ -1004,7 +1005,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
         <div className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center gap-2 sm:gap-3">
           <div
             ref={centerCardRef}
-            className="relative z-20 w-[min(72vw,30vh,380px)] sm:w-[min(88vw,38vh,520px)]"
+            className="relative z-20 w-[min(72vw,30vh,380px)] sm:w-[min(48vw,36vh,480px)] lg:w-[min(26vw,40vh,520px)] 2xl:w-[min(24vw,44vh,640px)]"
           >
             <TarotCardView
               card={selectedCard}
