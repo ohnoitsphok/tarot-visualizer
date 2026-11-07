@@ -32,7 +32,7 @@ describe('Phase 2 dataset integrity', () => {
       expect(c.imageUrl).toMatch(/^\/cards\/[a-z0-9-]+\.jpg$/);
       const filePath = path.join(publicCardsDir, path.basename(c.imageUrl));
       expect(fs.existsSync(filePath), `Missing image file for ${c.id}: ${filePath}`).toBe(true);
-      expect(fs.statSync(filePath).size).toBeGreaterThan(1000);
+      expect(fs.statSync(filePath).size).toBeGreaterThan(50000);
 
       for (const m of [c.upright, c.reversed]) {
         expect(m.keywords.length).toBeGreaterThanOrEqual(3);

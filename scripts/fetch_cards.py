@@ -7,6 +7,19 @@ BASE_URL = "https://raw.githubusercontent.com/seven102161/elaine-tarot-cards/mai
 DEST_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "cards")
 TIMEOUT_SECONDS = 15
 
+# Upstream seven102161/elaine-tarot-cards has corrupt scans for 9 court/ace cards; route to verified public-domain 720px scans.
+VERIFIED_CARD_URLS = {
+    "ace-of-swords.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Swords01.jpg",
+    "page-of-swords.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Swords11.jpg",
+    "knight-of-swords.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Swords12.jpg",
+    "queen-of-swords.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Swords13.jpg",
+    "king-of-swords.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Swords14.jpg",
+    "page-of-pentacles.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Pents11.jpg",
+    "knight-of-pentacles.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Pents12.jpg",
+    "queen-of-pentacles.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Pents13.jpg",
+    "king-of-pentacles.jpg": "https://raw.githubusercontent.com/mixvlad/TarotCards/main/tarot/rider-waite/720px/Pents14.jpg",
+}
+
 MAJOR_SLUGS = (
     "the-fool", "the-magician", "the-high-priestess", "the-empress", "the-emperor",
     "the-hierophant", "the-lovers", "the-chariot", "strength", "the-hermit",
@@ -54,7 +67,7 @@ def build_manifest() -> list[tuple[str, str]]:
 
 def fetch_card(item: tuple[str, str]) -> tuple[str, bool | str]:
     src_name, dest_name = item
-    url = f"{BASE_URL}/{src_name}"
+    url = VERIFIED_CARD_URLS.get(dest_name, f"{BASE_URL}/{src_name}")
     if not url.startswith("https://"):
         return dest_name, f"Refusing non-HTTPS URL: {url}"
     dest_path = os.path.join(DEST_DIR, dest_name)
