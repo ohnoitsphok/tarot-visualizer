@@ -25,8 +25,8 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-obsidian text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-gold-light relative">
-      {/* Persistent Floating Seal Button for Detail & Study views */}
-      {(inspectorStage === 'detail' || activeTab === 'study' || activeTab === 'spreads') && (
+      {/* Floating Navigation Pill for Standalone Study & Spreads Views */}
+      {(activeTab === 'study' || activeTab === 'spreads') && (
         <nav
           aria-label="Sanctuary Navigation"
           className="fixed top-4 left-4 z-50 flex items-center gap-2"

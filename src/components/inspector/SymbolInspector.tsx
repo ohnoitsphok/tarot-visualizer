@@ -764,10 +764,13 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
   }
 
   // STAGE 3: ORBITAL FLOATING TEXT & MENUS WRAPPING AROUND THE ROTATING MAGIC CIRCLE
+  const suitCfg = CORNER_SUIT_CONFIG.find((c) => c.suit === selectedCard.suit);
+  const suitCards = selectedCard.suit ? CARDS.filter((c) => c.suit === selectedCard.suit) : [];
+
   return (
     <section
       aria-label={`Detailed inspection of ${selectedCard.name}`}
-      className="w-full min-h-screen max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 pt-16 pb-6 flex flex-col gap-4 relative overflow-hidden"
+      className="w-full min-h-screen max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 pt-4 pb-6 flex flex-col gap-4 relative overflow-hidden"
     >
       {/* Background Rotating Magic Circle Pattern */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -791,7 +794,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-serif tracking-wider uppercase text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <ArrowLeft className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-            <span>Deck Gallery</span>
+            <span>Arcana Wheel</span>
           </button>
 
           <button
@@ -1044,21 +1047,90 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                 })}
               </div>
             ) : (
-              <div className="py-4 text-xs text-slate-200 space-y-2">
-                <p className="leading-relaxed">
-                  <strong>{selectedCard.name}</strong> belongs to the{' '}
-                  <span className="capitalize text-gold-light">{selectedCard.suit}</span> suit.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCardId('the-fool');
-                    setActiveHotspotId(null);
-                  }}
-                  className="px-3 py-1.5 rounded-full text-xs font-serif text-gold-light bg-gold/15 border border-gold/35 hover:bg-gold/25"
-                >
-                  Return to Major Arcana
-                </button>
+              <div className="space-y-4">
+                <div className="p-4 rounded-xl border border-gold/30 bg-obsidian-elevated/70 backdrop-blur-md space-y-2">
+                  <div className="flex items-center gap-2 text-gold">
+                    {suitCfg && <suitCfg.icon className="h-4 w-4 text-gold" />}
+                    <h4 className="font-serif text-sm font-semibold text-gold-light">
+                      Suit of {suitCfg?.name ?? 'Minor Arcana'} &bull; {selectedCard.element}
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                    Astrological Decan &bull;{' '}
+                    <strong className="text-purple-300 font-mono">{selectedCard.astrology}</strong>
+                  </p>
+                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                    Numerology &bull;{' '}
+                    <span className="text-gold-light">
+                      {selectedCard.numerology.numeral} ({selectedCard.numerology.theme})
+                    </span>
+                  </p>
+                </div>
+
+                {/* 14 Cards in this Suit Quick Switcher */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs text-gold">
+                    <span className="font-serif uppercase tracking-wider text-[11px]">
+                      {suitCfg?.name} Sequence ({suitCards.length} Cards)
+                    </span>
+                    <span className="text-[10px] text-slate-400">Click to Inspect</span>
+                  </div>
+                  <div className="grid grid-cols-7 gap-1.5 p-2 rounded-xl border border-gold/20 bg-obsidian/60">
+                    {suitCards.map((card) => {
+                      const isCurrent = card.id === selectedCard.id;
+                      return (
+                        <button
+                          key={card.id}
+                          type="button"
+                          onClick={() => {
+                            triggerHaptic(12);
+                            setSelectedCardId(card.id);
+                            setActiveHotspotId(null);
+                            setHoveredHotspotId(null);
+                          }}
+                          aria-label={`Inspect ${card.name}`}
+                          className={`group flex flex-col items-center rounded-lg p-0.5 border transition-all ${
+                            isCurrent
+                              ? 'border-gold bg-gold/25 ring-1 ring-gold shadow-md'
+                              : 'border-gold/15 bg-obsidian-elevated/60 hover:border-gold/50'
+                          }`}
+                        >
+                          <div className="w-full aspect-tarot rounded overflow-hidden">
+                            <TarotCardView
+                              card={card}
+                              loading="lazy"
+                              className="w-full pointer-events-none"
+                            />
+                          </div>
+                          <span
+                            className={`text-[8px] font-mono mt-0.5 truncate w-full text-center ${
+                              isCurrent
+                                ? 'text-gold-light font-bold'
+                                : 'text-slate-400 group-hover:text-slate-200'
+                            }`}
+                          >
+                            {card.numerology.numeral.slice(0, 3)}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCardId('the-fool');
+                      setActiveHotspotId(null);
+                      setHoveredHotspotId(null);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-serif text-gold-light bg-gold/15 border border-gold/35 hover:bg-gold/25 transition-colors"
+                  >
+                    <Sparkles className="h-3 w-3 text-gold" />
+                    <span>Explore Major Arcana</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
