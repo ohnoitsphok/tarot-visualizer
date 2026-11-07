@@ -1,4 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import { CARDS } from '../data/cards';
 import { SPREADS } from '../data/spreads';
 import { USAGE_GUIDE } from '../data/usageGuide';
@@ -19,8 +25,15 @@ describe('Phase 2 dataset integrity', () => {
 
   it('has unique ids, safe local image paths, and complete meanings', () => {
     expect(new Set(CARDS.map((c) => c.id)).size).toBe(CARDS.length);
+    const publicCardsDir = path.resolve(__dirname, '../../public/cards');
+    expect(fs.existsSync(publicCardsDir)).toBe(true);
+
     for (const c of CARDS) {
       expect(c.imageUrl).toMatch(/^\/cards\/[a-z0-9-]+\.jpg$/);
+      const filePath = path.join(publicCardsDir, path.basename(c.imageUrl));
+      expect(fs.existsSync(filePath), `Missing image file for ${c.id}: ${filePath}`).toBe(true);
+      expect(fs.statSync(filePath).size).toBeGreaterThan(1000);
+
       for (const m of [c.upright, c.reversed]) {
         expect(m.keywords.length).toBeGreaterThanOrEqual(3);
         expect(m.keywords.every((k) => k.trim().length > 0)).toBe(true);
