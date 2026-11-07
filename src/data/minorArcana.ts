@@ -1,0 +1,78 @@
+import type { Suit } from '../types';
+
+/** [upright keywords, reversed keywords, upright meaning, reversed meaning]. Order: Ace, 2..10, Page, Knight, Queen, King. */
+export type MinorRow = readonly [string, string, string, string];
+
+export const SUIT_INFO: Readonly<Record<Suit, { element: 'fire' | 'water' | 'air' | 'earth'; signs: string }>> = {
+  wands: { element: 'fire', signs: 'Aries, Leo, Sagittarius' },
+  cups: { element: 'water', signs: 'Cancer, Scorpio, Pisces' },
+  swords: { element: 'air', signs: 'Gemini, Libra, Aquarius' },
+  pentacles: { element: 'earth', signs: 'Taurus, Virgo, Capricorn' },
+};
+
+export const MINOR_ROWS: Readonly<Record<Suit, readonly MinorRow[]>> = {
+  wands: [
+    ['inspiration,new venture,spark,potential', 'delays,lack of drive,false start,creative block', 'A spark of creative energy and a bold new beginning.', 'The spark is there but stalls: a delayed start, a creative block or a lack of drive.'],
+    ['planning,decisions,vision,discovery', 'fear of unknown,poor planning,playing safe', 'You hold the world in your hands; plan your next move.', 'Fear of the unknown keeps you playing safe, or plans are made without vision.'],
+    ['expansion,foresight,progress,overseas', 'obstacles,delays,poor foresight', 'Your ships are out; early efforts begin to return.', 'Obstacles and delays slow expansion, often from poor foresight.'],
+    ['celebration,harmony,home,milestone', 'instability,conflict at home,delayed celebration', 'A joyful milestone shared with community and home.', 'Tension at home or a celebration postponed; the foundation feels unstable.'],
+    ['conflict,competition,tension,diversity', 'avoiding conflict,truce,inner tension', 'Clashing ideas and rivalry; productive if channelled.', 'Conflict is avoided or turns inward; a truce, or tension left unspoken.'],
+    ['victory,recognition,confidence,public success', 'ego,fall from grace,lack of recognition', 'Public triumph after effort and perseverance.', 'Success is unrecognised or ego-driven, with a risk of a fall from grace.'],
+    ['defence,perseverance,standing ground,courage', 'overwhelm,giving up,exhaustion', 'Hold your position; you are defending something worth keeping.', 'Overwhelmed and exhausted, you are tempted to give up the defence.'],
+    ['speed,movement,rapid action,news', 'delays,frustration,slowdown', 'Swift motion and quick messages; things move fast.', 'Momentum drops into delays, frustration and missed messages.'],
+    ['resilience,persistence,last stand,caution', 'exhaustion,paranoia,stubbornness', 'Battle-weary but nearly through; one more push.', 'Exhaustion and stubborn suspicion; defensiveness blocks the last step.'],
+    ['burden,responsibility,hard work,overcommitment', 'letting go,delegating,collapse under load', 'Carrying too much for the sake of the goal.', 'The load is dropped or shared, or it becomes too heavy and you collapse under it.'],
+    ['enthusiasm,exploration,discovery,free spirit', 'lack of direction,procrastination,hasty ideas', 'An eager messenger of new creative ideas.', 'Enthusiasm without direction: procrastination or half-formed ideas.'],
+    ['energy,passion,adventure,impulsiveness', 'recklessness,haste,scattered energy', 'Charging after a goal with bold, restless drive.', 'Haste and recklessness scatter energy; passion burns out or runs wild.'],
+    ['courage,confidence,vibrancy,determination', 'selfishness,jealousy,demanding,insecurity', 'Warm, magnetic leader who inspires with confidence.', 'Confidence sours into jealousy, demands or insecurity.'],
+    ['vision,leadership,boldness,honour', 'impulsive,overbearing,ruthless,tyrannical', 'A visionary leader who turns inspiration into results.', 'Leadership turns overbearing, impulsive or ruthless.'],
+  ],
+  cups: [
+    ['love,new feelings,intuition,compassion', 'blocked emotion,emptiness,repressed feeling', 'An overflowing of emotion; open your heart.', 'Emotions are blocked or repressed, leaving a sense of emptiness.'],
+    ['partnership,mutual attraction,unity,connection', 'imbalance,broken bond,disharmony', 'Two people meet as equals in mutual respect.', 'A bond is strained by imbalance or disharmony.'],
+    ['friendship,celebration,community,joy', 'overindulgence,gossip,isolation', 'Celebrate with friends; shared happiness.', 'Celebration tips into overindulgence or gossip, or you feel left out.'],
+    ['apathy,contemplation,reevaluation,disconnection', 'new awareness,acceptance,moving on', 'Withdrawn from offers, you weigh what you really want.', 'Apathy lifts: you notice what is offered and begin to move on.'],
+    ['loss,grief,regret,disappointment', 'acceptance,moving on,finding peace', 'Mourning what is spilled while two cups still stand.', 'You turn from grief toward the cups still standing, and begin to heal.'],
+    ['nostalgia,childhood,innocence,reunion', 'living in the past,naivety,moving forward', 'Sweet memories and simple, generous kindness.', 'Nostalgia traps you in the past; time to move forward.'],
+    ['choices,fantasy,illusion,wishful thinking', 'clarity,focus,sobering reality', 'Many tempting options; not all are real.', 'The fog clears: illusions drop away and you can choose with focus.'],
+    ['walking away,disillusion,seeking more,leaving', 'fear of change,drifting,aimless', 'You leave something behind to search for deeper meaning.', 'Fear keeps you from leaving, or you drift without purpose.'],
+    ['contentment,satisfaction,gratitude,wish fulfilled', 'greed,smugness,dissatisfaction', 'Your emotional wishes come true; enjoy it.', 'Satisfaction turns hollow: smugness, greed or a wish that does not satisfy.'],
+    ['harmony,family,fulfilment,lasting happiness', 'broken home,disharmony,misaligned values', 'Emotional fulfilment shared with those you love.', 'Family harmony breaks down through disputes or misaligned values.'],
+    ['sensitivity,dreaming,creative message,curiosity', 'emotional immaturity,insecurity,escapism', 'A gentle, imaginative messenger of the heart.', 'Sensitivity becomes insecurity or escapism.'],
+    ['romance,charm,imagination,invitation', 'moodiness,unrealistic,jealousy', 'A romantic idealist bearing an offer of the heart.', 'Charm hides moodiness, unrealistic promises or jealousy.'],
+    ['compassion,calm,intuition,emotional support', 'martyrdom,insecurity,emotionally manipulative', 'Deep emotional wisdom, nurturing and intuitive.', 'Care becomes martyrdom, insecurity or emotional manipulation.'],
+    ['emotional balance,diplomacy,control,generosity', 'moodiness,manipulation,emotional volatility', 'Mastery of feeling combined with calm leadership.', 'Control slips into moodiness, manipulation or volatility.'],
+  ],
+  swords: [
+    ['clarity,breakthrough,truth,mental force', 'confusion,brutality,clouded judgment', 'A moment of piercing clarity and a clean new idea.', 'Clarity is lost to confusion, or truth is used harshly.'],
+    ['indecision,stalemate,blocked emotion,truce', 'information overload,lesser of two evils,release', 'A difficult choice avoided behind a blindfold.', 'The blindfold comes off, or too much information makes a choice harder.'],
+    ['heartbreak,grief,sorrow,painful truth', 'recovery,forgiveness,moving on', 'Painful truth that must be felt to heal.', 'The pain begins to ease through forgiveness, or it is held in and prolonged.'],
+    ['rest,restoration,contemplation,recuperation', 'burnout,restlessness,returning to action', 'Pause and recover; the mind needs stillness.', 'Restlessness or burnout; you rise from rest, ready or not.'],
+    ['conflict,defeat,win at all costs,hollow victory', 'reconciliation,making amends,past resentment', 'A hollow victory won at too high a price.', 'Reconciliation is possible, or old resentment lingers after the fight.'],
+    ['transition,moving on,calmer waters,healing', 'stuck in past,unresolved issues,resistance', 'Leaving troubled waters toward calmer shores.', 'You resist the move and carry unresolved issues with you.'],
+    ['deception,strategy,stealth,evasion', 'coming clean,conscience,confession', 'Acting alone and by cunning; consider the cost.', 'Conscience wins: a confession, or a deception comes to light.'],
+    ['restriction,self-imposed trap,helplessness,limitation', 'freedom,release,new perspective', 'Bound by belief rather than reality; the way out is open.', 'The bindings loosen: you see the exit and begin to free yourself.'],
+    ['anxiety,worry,nightmares,despair', 'hope,reaching out,releasing fear', 'Worry magnified in the dark; speak your fear aloud.', 'Fear loosens its hold as you reach out for support.'],
+    ['ruin,betrayal,painful ending,rock bottom', 'recovery,survival,resisting the end', 'A painful ending that cannot get worse; dawn follows.', 'Recovery begins, or you drag out an ending that has already happened.'],
+    ['curiosity,vigilance,new ideas,clever messenger', 'gossip,hasty words,all talk,deception', 'A sharp, curious mind seeking facts and truth.', 'Curiosity turns to gossip, hasty words or empty talk.'],
+    ['ambition,assertiveness,drive,direct speech', 'impatience,ruthless,aggression,scattered', 'Charges in headlong with swift, logical force.', 'Drive becomes aggression or impatience, without a clear plan.'],
+    ['perceptiveness,independence,clear boundaries,honesty', 'coldness,bitterness,cruel words,isolation', 'Sharp-minded, honest and experienced through loss.', 'Honesty hardens into coldness, bitterness or cruel words.'],
+    ['authority,intellect,truth,ethical clarity', 'manipulation,cruelty,abuse of power', 'A fair and rational judge ruling by truth.', 'Intellect is used to manipulate or to abuse power.'],
+  ],
+  pentacles: [
+    ['prosperity,opportunity,manifestation,new resource', 'missed chance,scarcity,bad investment', 'A tangible new opportunity for material security.', 'An opportunity is missed, or a resource is wasted on a poor investment.'],
+    ['balance,adaptability,juggling,priorities', 'overwhelm,disorganisation,imbalance', 'Juggling competing demands with flexible poise.', 'The juggling act collapses into overwhelm and disorganisation.'],
+    ['teamwork,craftsmanship,collaboration,mastery', 'poor teamwork,lack of quality,disharmony', 'Skilled work is recognised through collaboration.', 'Teamwork falters and quality drops; effort goes unrecognised.'],
+    ['security,saving,control,possessiveness', 'greed,generosity,letting go', 'Holding tightly to what you have to feel safe.', 'Grip tightens into greed, or loosens into generosity and release.'],
+    ['hardship,loss,poverty,isolation', 'recovery,charity,improvement', 'Material or spiritual hardship; help is nearby.', 'The worst passes: help is accepted and recovery begins.'],
+    ['generosity,giving,sharing,charity', 'debt,selfishness,strings attached', 'Resources flow in balance between giving and receiving.', 'Giving becomes one-sided: debt, selfishness or strings attached.'],
+    ['patience,long-term view,investment,perseverance', 'impatience,poor returns,lack of reward', 'Pause and assess after long work; the harvest is coming.', 'Impatience or poor returns; the effort feels unrewarded.'],
+    ['apprenticeship,diligence,craft,skill development', 'perfectionism,lack of focus,uninspired work', 'Dedicated practice that perfects a craft.', 'Focus slips into perfectionism, or work becomes uninspired.'],
+    ['independence,luxury,self-sufficiency,refinement', 'overworking,superficial,dependent', 'Comfort and abundance earned through your own effort.', 'Independence is undermined by overwork, dependence or superficial comfort.'],
+    ['legacy,wealth,family,long-term success', 'family disputes,instability,financial failure', 'Lasting material security and a legacy for generations.', 'Family disputes or financial instability threaten the legacy.'],
+    ['ambition,study,manifestation,practical dreaming', 'lack of progress,procrastination,short-term thinking', 'A diligent student with a practical new goal.', 'Goals stall through procrastination or short-term thinking.'],
+    ['routine,reliability,hard work,responsibility', 'boredom,laziness,stagnation,perfectionism', 'Steady, dependable progress; slow but sure.', 'Routine becomes boredom, laziness or stagnation.'],
+    ['nurturing,practicality,security,generosity', 'self-centredness,jealousy,smothering', 'Warm, practical provider who creates abundance.', 'Provision turns smothering, jealous or self-centred.'],
+    ['wealth,leadership,security,discipline', 'greed,stubborn,indulgent,poor financial decisions', 'A steady master of resources and generous provider.', 'Mastery of resources slips into greed, stubbornness or poor financial decisions.'],
+  ],
+};

@@ -89,5 +89,47 @@
     "seen": 1794049458.060744,
     "ast_hash": "19bb599ed113b924a2ef9a54e5b2b075",
     "semantic_hash": "19bb599ed113b924a2ef9a54e5b2b075"
+  },
+  "src/data/cards.ts": {
+    "mtime": 1794055268.9529543,
+    "seen": 1794055305.5699823,
+    "ast_hash": "0b4321f104e907f15c8dfde9c3faf0c2",
+    "semantic_hash": "0b4321f104e907f15c8dfde9c3faf0c2"
+  },
+  "src/data/deepFreeze.ts": {
+    "mtime": 1794055219.6826372,
+    "seen": 1794055305.5699823,
+    "ast_hash": "4023a9826f9d0410cfb02e397e5c7d11",
+    "semantic_hash": "4023a9826f9d0410cfb02e397e5c7d11"
+  },
+  "src/data/majorArcana.ts": {
+    "mtime": 1794055268.962344,
+    "seen": 1794055305.5699823,
+    "ast_hash": "a97feb2c34b52e71aa06295d40f8e30d",
+    "semantic_hash": "a97feb2c34b52e71aa06295d40f8e30d"
+  },
+  "src/data/minorArcana.ts": {
+    "mtime": 1794055268.9452,
+    "seen": 1794055305.5699823,
+    "ast_hash": "4e64388cc4521effa0b7541a93636664",
+    "semantic_hash": "4e64388cc4521effa0b7541a93636664"
+  },
+  "src/data/spreads.ts": {
+    "mtime": 1794055268.972886,
+    "seen": 1794055305.5699823,
+    "ast_hash": "caf76bfb630b3eec4d72b1f1c86c4fd1",
+    "semantic_hash": "caf76bfb630b3eec4d72b1f1c86c4fd1"
+  },
+  "src/data/usageGuide.ts": {
+    "mtime": 1794055202.3346465,
+    "seen": 1794055305.5699823,
+    "ast_hash": "c67835104a9d6e303929c32e1ed4542b",
+    "semantic_hash": "c67835104a9d6e303929c32e1ed4542b"
+  },
+  "src/tests/dataValidation.test.ts": {
+    "mtime": 1794055281.147971,
+    "seen": 1794055305.5699823,
+    "ast_hash": "da10df31fb92661e00e2c44ff233b764",
+    "semantic_hash": "da10df31fb92661e00e2c44ff233b764"
   }
 }
