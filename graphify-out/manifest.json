@@ -25,10 +25,10 @@
     "semantic_hash": "414e4e3e3dda37af39ebc8e22ce390b0"
   },
   "src/App.tsx": {
-    "mtime": 1794048313.262493,
-    "seen": 1794048984.539713,
-    "ast_hash": "cecbe6651c544f7f1920d35dd0dcdee5",
-    "semantic_hash": "cecbe6651c544f7f1920d35dd0dcdee5"
+    "mtime": 1794060280.8028817,
+    "seen": 1794060682.8415768,
+    "ast_hash": "87be9f818ac06876e3dc289021c8b4a4",
+    "semantic_hash": "87be9f818ac06876e3dc289021c8b4a4"
   },
   "src/main.tsx": {
     "mtime": 1794048314.3840256,
@@ -131,5 +131,29 @@
     "seen": 1794055305.5699823,
     "ast_hash": "da10df31fb92661e00e2c44ff233b764",
     "semantic_hash": "da10df31fb92661e00e2c44ff233b764"
+  },
+  "src/components/common/Header.tsx": {
+    "mtime": 1794060256.7735877,
+    "seen": 1794060682.8415768,
+    "ast_hash": "6b7c72cf73af6ac238f2fbb301e6d5b7",
+    "semantic_hash": "6b7c72cf73af6ac238f2fbb301e6d5b7"
+  },
+  "src/components/common/TarotCardView.tsx": {
+    "mtime": 1794060208.2562795,
+    "seen": 1794060682.8415768,
+    "ast_hash": "dba0ae4e3c507167fe34a537fb802944",
+    "semantic_hash": "dba0ae4e3c507167fe34a537fb802944"
+  },
+  "src/components/inspector/HotspotOverlay.tsx": {
+    "mtime": 1794060280.8128083,
+    "seen": 1794060682.8415768,
+    "ast_hash": "08ed0c8c9f5cff3b433a75a5b638306f",
+    "semantic_hash": "08ed0c8c9f5cff3b433a75a5b638306f"
+  },
+  "src/components/inspector/SymbolInspector.tsx": {
+    "mtime": 1794060295.0621648,
+    "seen": 1794060682.8415768,
+    "ast_hash": "bded41cbf3c80bbde7f3cdc1d49e00e0",
+    "semantic_hash": "bded41cbf3c80bbde7f3cdc1d49e00e0"
   }
 }

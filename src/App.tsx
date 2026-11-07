@@ -1,22 +1,78 @@
-import { Sparkles } from 'lucide-react';
-import { APP_TABS, TOTAL_RWS_CARDS } from './types';
+import { useState } from 'react';
+import type { AppTab } from './types';
+import { Header } from './components/common/Header';
+import { SymbolInspector } from './components/inspector/SymbolInspector';
+import { Book, GraduationCap, LayoutGrid } from 'lucide-react';
 
 export function App() {
+  const [activeTab, setActiveTab] = useState<AppTab>('inspector');
+
   return (
-    <main className="min-h-screen bg-obsidian text-slate-100 flex items-center justify-center p-6">
-      <section className="max-w-lg w-full rounded-xl border border-gold/30 bg-obsidian-surface p-8 text-center shadow-lg">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold">
-          <Sparkles className="h-6 w-6" aria-hidden="true" />
-        </div>
-        <h1 className="text-2xl font-semibold tracking-wide text-gold-light">
-          Tarot Reference &amp; Visualizer
-        </h1>
-        <p className="mt-2 text-sm text-slate-400">
-          Phase 1 scaffold ready &mdash; {TOTAL_RWS_CARDS}-card RWS schema &amp;{' '}
-          {APP_TABS.length} core modules initialized.
-        </p>
-      </section>
-    </main>
+    <div className="min-h-screen bg-obsidian text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-gold-light">
+      <Header activeTab={activeTab} onSelectTab={setActiveTab} />
+
+      <main className="flex-1 flex flex-col">
+        {activeTab === 'inspector' && <SymbolInspector />}
+
+        {activeTab === 'library' && (
+          <div className="max-w-4xl mx-auto my-auto p-12 text-center border border-gold/20 rounded-xl bg-obsidian-surface/60 mt-12">
+            <Book className="h-10 w-10 text-gold mx-auto mb-4" />
+            <h2 className="text-xl font-serif font-semibold text-gold-light mb-2">
+              Card Encyclopedia Library
+            </h2>
+            <p className="text-sm text-slate-400 max-w-md mx-auto mb-4">
+              Switch to Visual Inspector to inspect cards and active symbolism hotspots.
+            </p>
+            <button
+              onClick={() => setActiveTab('inspector')}
+              className="px-4 py-2 bg-gold/10 hover:bg-gold/20 text-gold border border-gold/30 rounded-lg text-xs font-medium"
+            >
+              Open Visual Inspector
+            </button>
+          </div>
+        )}
+
+        {activeTab === 'study' && (
+          <div className="max-w-4xl mx-auto my-auto p-12 text-center border border-gold/20 rounded-xl bg-obsidian-surface/60 mt-12">
+            <GraduationCap className="h-10 w-10 text-gold mx-auto mb-4" />
+            <h2 className="text-xl font-serif font-semibold text-gold-light mb-2">
+              Study &amp; Active Recall Engine
+            </h2>
+            <p className="text-sm text-slate-400 max-w-md mx-auto mb-4">
+              Flashcard drilling and randomized tarot quizzes with local progress tracking.
+            </p>
+            <button
+              onClick={() => setActiveTab('inspector')}
+              className="px-4 py-2 bg-gold/10 hover:bg-gold/20 text-gold border border-gold/30 rounded-lg text-xs font-medium"
+            >
+              Explore Card Symbolism First
+            </button>
+          </div>
+        )}
+
+        {activeTab === 'spreads' && (
+          <div className="max-w-4xl mx-auto my-auto p-12 text-center border border-gold/20 rounded-xl bg-obsidian-surface/60 mt-12">
+            <LayoutGrid className="h-10 w-10 text-gold mx-auto mb-4" />
+            <h2 className="text-xl font-serif font-semibold text-gold-light mb-2">
+              Spread Layout Reference
+            </h2>
+            <p className="text-sm text-slate-400 max-w-md mx-auto mb-4">
+              Interactive layout diagrams for 3-Card, 5-Card, and Celtic Cross spreads.
+            </p>
+            <button
+              onClick={() => setActiveTab('inspector')}
+              className="px-4 py-2 bg-gold/10 hover:bg-gold/20 text-gold border border-gold/30 rounded-lg text-xs font-medium"
+            >
+              Back to Inspector
+            </button>
+          </div>
+        )}
+      </main>
+
+      <footer className="border-t border-gold/10 py-6 text-center text-xs text-slate-500 bg-obsidian-surface/40">
+        <p>Rider-Waite-Smith Reference Visualizer &bull; Built with React, Vite &amp; Tailwind CSS</p>
+      </footer>
+    </div>
   );
 }
 
