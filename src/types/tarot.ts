@@ -44,6 +44,18 @@ export const MAJOR_ARCANA_COUNT = 22 as const;
 export const MINOR_ARCANA_COUNT = 56 as const;
 export const CARDS_PER_SUIT = 14 as const;
 
+export const TAROT_CARD_ASPECT_RATIO = '4 / 7' as const;
+export const HOTSPOT_MIN_PERCENT = 0 as const;
+export const HOTSPOT_MAX_PERCENT = 100 as const;
+
+export function isValidHotspotCoordinate(value: number): boolean {
+  return (
+    Number.isFinite(value) &&
+    value >= HOTSPOT_MIN_PERCENT &&
+    value <= HOTSPOT_MAX_PERCENT
+  );
+}
+
 export type CardRank = number | CourtRank;
 
 export interface CardNumerology {

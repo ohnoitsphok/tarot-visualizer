@@ -4,10 +4,12 @@ import {
   CARDS_PER_SUIT,
   ELEMENTS,
   INITIAL_STUDY_PROGRESS,
+  isValidHotspotCoordinate,
   MAJOR_ARCANA_COUNT,
   MINOR_ARCANA_COUNT,
   STUDY_SCHEMA_VERSION,
   SUITS,
+  TAROT_CARD_ASPECT_RATIO,
   TOTAL_RWS_CARDS,
 } from '../types';
 
@@ -36,5 +38,16 @@ describe('Phase 1 foundational domain & state invariants', () => {
     expect(Object.isFrozen(INITIAL_STUDY_PROGRESS.bookmarks)).toBe(true);
     expect(Object.isFrozen(INITIAL_STUDY_PROGRESS.records)).toBe(true);
     expect(Object.isFrozen(INITIAL_STUDY_PROGRESS.quizHistory)).toBe(true);
+  });
+
+  it('guards normalized hotspot coordinates within locked 4/7 aspect frame', () => {
+    expect(TAROT_CARD_ASPECT_RATIO).toBe('4 / 7');
+    expect(isValidHotspotCoordinate(0)).toBe(true);
+    expect(isValidHotspotCoordinate(50.5)).toBe(true);
+    expect(isValidHotspotCoordinate(100)).toBe(true);
+    expect(isValidHotspotCoordinate(-0.01)).toBe(false);
+    expect(isValidHotspotCoordinate(100.01)).toBe(false);
+    expect(isValidHotspotCoordinate(Number.NaN)).toBe(false);
+    expect(isValidHotspotCoordinate(Number.POSITIVE_INFINITY)).toBe(false);
   });
 });

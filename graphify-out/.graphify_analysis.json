@@ -13,7 +13,10 @@
       "src_types_tarot_element",
       "src_types_tarot_elements",
       "src_types_tarot_hotspot_categories",
+      "src_types_tarot_hotspot_max_percent",
+      "src_types_tarot_hotspot_min_percent",
       "src_types_tarot_hotspotcategory",
+      "src_types_tarot_isvalidhotspotcoordinate",
       "src_types_tarot_libraryfilterstate",
       "src_types_tarot_major_arcana_count",
       "src_types_tarot_minor_arcana_count",
@@ -25,6 +28,7 @@
       "src_types_tarot_suit",
       "src_types_tarot_suits",
       "src_types_tarot_symbolhotspot",
+      "src_types_tarot_tarot_card_aspect_ratio",
       "src_types_tarot_tarotcard",
       "src_types_tarot_usageguidesection",
       "src_types_tarot_usageprinciple",
@@ -41,6 +45,7 @@
       "package_devdependencies_typescript",
       "package_devdependencies_vite",
       "package_devdependencies_vitejs_plugin_react",
+      "package_devdependencies_vitest",
       "package_name",
       "package_private",
       "package_type",
@@ -53,7 +58,9 @@
       "ref_typescript",
       "ref_vite",
       "ref_vitejs_plugin_react",
-      "vite_config"
+      "ref_vitest",
+      "vite_config",
+      "vitest_config"
     ],
     "2": [
       "tsconfig",
@@ -131,19 +138,18 @@
       "tsconfig_node_include"
     ],
     "6": [
-      "package_devdependencies_vitest",
-      "ref_vitest",
       "src_tests_scaffolding_test",
       "src_types_index_app_tabs",
       "src_types_index_cards_per_suit",
       "src_types_index_elements",
       "src_types_index_initial_study_progress",
+      "src_types_index_isvalidhotspotcoordinate",
       "src_types_index_major_arcana_count",
       "src_types_index_minor_arcana_count",
       "src_types_index_study_schema_version",
       "src_types_index_suits",
-      "src_types_index_total_rws_cards",
-      "vitest_config"
+      "src_types_index_tarot_card_aspect_ratio",
+      "src_types_index_total_rws_cards"
     ],
     "7": [
       "package_scripts",
@@ -166,13 +172,13 @@
     ]
   },
   "cohesion": {
-    "0": 0.07142857142857142,
-    "1": 0.1225296442687747,
+    "0": 0.0625,
+    "1": 0.1076923076923077,
     "2": 0.09523809523809523,
     "3": 0.13333333333333333,
     "4": 0.1619047619047619,
     "5": 0.13333333333333333,
-    "6": 0.15384615384615385,
+    "6": 0.16666666666666666,
     "7": 0.25,
     "8": 1.0,
     "9": 1.0,
@@ -246,28 +252,28 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `lucide-react` connect `compilerOptions` to `package.json`?",
+      "question": "Why does `vitest` connect `package.json` to `scripts`?",
       "why": "High betweenness centrality (0.112) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `tarot.ts` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.0625 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `vitest` connect `scripts` to `package.json`?",
-      "why": "High betweenness centrality (0.108) - this node is a cross-community bridge."
+      "question": "Why does `lucide-react` connect `compilerOptions` to `package.json`?",
+      "why": "High betweenness centrality (0.111) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `package.json` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.1225296442687747 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.1076923076923077 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
       "question": "Why does `scripts` connect `tailwind.config.js` to `package.json`?",
-      "why": "High betweenness centrality (0.070) - this node is a cross-community bridge."
+      "why": "High betweenness centrality (0.068) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
