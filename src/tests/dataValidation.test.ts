@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import { CARDS } from '../data/cards';
+import { CARD_BY_ID, CARDS } from '../data/cards';
 import { SPREADS } from '../data/spreads';
 import { USAGE_GUIDE } from '../data/usageGuide';
 import {
@@ -69,7 +69,11 @@ describe('Phase 2 dataset integrity', () => {
     expect(CARDS.slice(0, 22).map((c) => c.number)).toEqual([...Array(22).keys()]);
     expect(CARDS.every((c) => c.numerology.theme.length > 0)).toBe(true);
     expect(Object.isFrozen(CARDS[0]?.numerology)).toBe(true);
+    expect(Object.isFrozen(CARDS[0]?.upright.keywords)).toBe(true);
+    expect(Object.isFrozen(CARDS[0]?.hotspots[0])).toBe(true);
     expect(Object.isFrozen(CARDS[30]?.numerology)).toBe(true);
+    expect(CARDS[22]?.hotspots).toBe(CARDS[23]?.hotspots);
+    expect(CARDS.every((c) => CARD_BY_ID.get(c.id) === c)).toBe(true);
     expect(Object.isFrozen(SPREADS[0]?.positions[0])).toBe(true);
     expect(Object.isFrozen(USAGE_GUIDE[0]?.principles)).toBe(true);
   });

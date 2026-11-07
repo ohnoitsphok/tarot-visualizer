@@ -1,77 +1,103 @@
-import os
-import urllib.request
 import concurrent.futures
+import os
+import sys
+import urllib.request
 
 BASE_URL = "https://raw.githubusercontent.com/seven102161/elaine-tarot-cards/main/cards"
 DEST_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "cards")
-os.makedirs(DEST_DIR, exist_ok=True)
+TIMEOUT_SECONDS = 15
 
-major_slugs = [
+MAJOR_SLUGS = (
     "the-fool", "the-magician", "the-high-priestess", "the-empress", "the-emperor",
     "the-hierophant", "the-lovers", "the-chariot", "strength", "the-hermit",
     "wheel-of-fortune", "justice", "the-hanged-man", "death", "temperance",
     "the-devil", "the-tower", "the-star", "the-moon", "the-sun",
-    "judgement", "the-world"
-]
+    "judgement", "the-world",
+)
 
-suit_prefixes = {
+SUIT_PREFIXES = {
     "wands": "wa",
     "cups": "cu",
     "swords": "sw",
-    "pentacles": "pe"
+    "pentacles": "pe",
 }
 
-rank_names = [
-    ("ace", "ac"),
-    ("two", "02"),
-    ("three", "03"),
-    ("four", "04"),
-    ("five", "05"),
-    ("six", "06"),
-    ("seven", "07"),
-    ("eight", "08"),
-    ("nine", "09"),
-    ("ten", "10"),
-    ("page", "pa"),
-    ("knight", "kn"),
-    ("queen", "qu"),
-    ("king", "ki")
-]
+RANK_NAMES = (
+    ("ace", "ac"), ("two", "02"), ("three", "03"), ("four", "04"), ("five", "05"),
+    ("six", "06"), ("seven", "07"), ("eight", "08"), ("nine", "09"), ("ten", "10"),
+    ("page", "pa"), ("knight", "kn"), ("queen", "qu"), ("king", "ki"),
+)
 
-downloads = []
 
-# 22 Major Arcana
-for i, slug in enumerate(major_slugs):
-    src_name = f"ar{i:02d}.jpg"
-    dest_name = f"{slug}.jpg"
-    downloads.append((src_name, dest_name))
+def is_valid_jpeg(path: str) -> bool:
+    try:
+        if os.path.getsize(path) <= 1000:
+            return False
+        with open(path, "rb") as fh:
+            head = fh.read(2)
+            fh.seek(-2, os.SEEK_END)
+            tail = fh.read(2)
+        return head == b"\xff\xd8" and tail == b"\xff\xd9"
+    except OSError:
+        return False
 
-# 56 Minor Arcana
-for suit, prefix in suit_prefixes.items():
-    for rank_slug, code in rank_names:
-        src_name = f"{prefix}{code}.jpg"
-        dest_name = f"{rank_slug}-of-{suit}.jpg"
-        downloads.append((src_name, dest_name))
 
-def fetch_card(item):
+def build_manifest() -> list[tuple[str, str]]:
+    downloads: list[tuple[str, str]] = [
+        (f"ar{i:02d}.jpg", f"{slug}.jpg") for i, slug in enumerate(MAJOR_SLUGS)
+    ]
+    for suit, prefix in SUIT_PREFIXES.items():
+        for rank_slug, code in RANK_NAMES:
+            downloads.append((f"{prefix}{code}.jpg", f"{rank_slug}-of-{suit}.jpg"))
+    return downloads
+
+
+def fetch_card(item: tuple[str, str]) -> tuple[str, bool | str]:
     src_name, dest_name = item
     url = f"{BASE_URL}/{src_name}"
+    if not url.startswith("https://"):
+        return dest_name, f"Refusing non-HTTPS URL: {url}"
     dest_path = os.path.join(DEST_DIR, dest_name)
-    if os.path.exists(dest_path) and os.path.getsize(dest_path) > 1000:
+    if os.path.exists(dest_path) and is_valid_jpeg(dest_path):
         return dest_name, True
+
+    tmp_path = f"{dest_path}.part.{os.getpid()}"
     try:
-        urllib.request.urlretrieve(url, dest_path)
+        req = urllib.request.Request(url, headers={"User-Agent": "tarot-visualizer-AssetFetcher/1.0"})
+        with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
+            data = resp.read()
+        if len(data) <= 1000 or not (data.startswith(b"\xff\xd8") and data.endswith(b"\xff\xd9")):
+            return dest_name, "Invalid or truncated JPEG payload"
+        with open(tmp_path, "wb") as out:
+            out.write(data)
+        os.replace(tmp_path, dest_path)
         return dest_name, True
-    except Exception as e:
-        return dest_name, str(e)
+    except BaseException as exc:
+        if os.path.exists(tmp_path):
+            try:
+                os.remove(tmp_path)
+            except OSError:
+                pass
+        if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+            raise
+        return dest_name, str(exc)
 
-print(f"Downloading {len(downloads)} cards into {DEST_DIR}...")
-with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
-    results = list(executor.map(fetch_card, downloads))
 
-failed = [res for res in results if res[1] is not True]
-if failed:
-    print(f"Failed downloads ({len(failed)}): {failed}")
-    exit(1)
-else:
-    print(f"Successfully downloaded and bundled all {len(downloads)} cards!")
+def main() -> int:
+    os.makedirs(DEST_DIR, exist_ok=True)
+    downloads = build_manifest()
+    print(f"Verifying/downloading {len(downloads)} cards into {DEST_DIR}...")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        results = list(executor.map(fetch_card, downloads))
+
+    failed = [res for res in results if res[1] is not True]
+    if failed:
+        print(f"Failed downloads ({len(failed)}): {failed}", file=sys.stderr)
+        return 1
+
+    print(f"Verified all {len(downloads)} cards.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

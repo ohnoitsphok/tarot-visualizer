@@ -1,6 +1,5 @@
-// No isFrozen shortcut: items may be shallow-frozen already. Data is acyclic.
 export function deepFreeze<T>(o: T): T {
-  if (o && typeof o === 'object') {
+  if (o && typeof o === 'object' && !Object.isFrozen(o)) {
     Object.freeze(o);
     Object.values(o).forEach(deepFreeze);
   }
