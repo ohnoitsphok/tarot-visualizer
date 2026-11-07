@@ -4,7 +4,7 @@ Every feature addition, bug fix, or refactor must pass an autonomous 4-stage pip
 * Stage 1 (Implementation): Produce minimal, non-destructive unified diffs.
 * Stage 2 (QA & Bug Sweep): Run local linters, unit tests, TypeScript type checks (`tsc --noEmit`), and Vite build (`npm run build`). Inspect console output and catch syntax, runtime, and type errors. If tests fail, diagnose and self-heal automatically.
 * Stage 3 (Optimization & State Audit): Inspect git diffs for unnecessary DOM reflows, unhandled Promise rejections, memory leaks, and redundant reactive state updates. Apply non-breaking optimizations.
-* Stage 4 (Artifact Sign-off & Auto-Commit): Produce an Artifact summarizing: (1) Files changed, (2) Test results/status, (3) Optimizations applied. Automatically stage and create a local git commit for verified changes with a concise conventional commit message. Never run `git push` without explicit user instruction.
+* Stage 4 (Artifact Sign-off & Local Commit Only): Produce an Artifact summarizing: (1) Files changed, (2) Test results/status, (3) Optimizations applied. Automatically stage and create a local git commit for verified changes with a concise conventional commit message (`git add -A && git commit -m "..."`). STRICT: Only commit locally; do NOT push (`git push`) unless explicitly asked to by the user in that prompt.
 
 ## Subagent Pipeline Roles (`.antigravity/subagents.json`)
 - **`qa-verifier`**: Executes Stage 2 verification (TypeScript compiler checks, React syntax/hook rules, Vite build, and unit/integration tests), inspects exit codes, and isolates failures for automatic self-healing.
