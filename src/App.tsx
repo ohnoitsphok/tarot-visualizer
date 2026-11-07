@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
-import { GraduationCap, LayoutGrid } from 'lucide-react';
+import { Compass, GraduationCap, LayoutGrid } from 'lucide-react';
 import type { AppTab } from './types';
-import { Header } from './components/common/Header';
 import { SymbolInspector, type InspectorStage } from './components/inspector/SymbolInspector';
 
 export function App() {
@@ -25,8 +24,35 @@ export function App() {
   const isDeckOrLibrary = activeTab === 'inspector' || activeTab === 'library';
 
   return (
-    <div className="min-h-screen bg-obsidian text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-gold-light">
-      <Header activeTab={activeTab} onSelectTab={handleSelectTab} />
+    <div className="min-h-screen bg-obsidian text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-gold-light relative">
+      {/* Subtle Persistent Floating Seal Button for Universal Return / Navigation */}
+      <nav
+        aria-label="Sanctuary Navigation"
+        className="fixed top-4 left-4 z-50 flex items-center gap-2"
+      >
+        <button
+          type="button"
+          onClick={() => handleSelectTab('inspector')}
+          title="Return to Deck Sanctuary"
+          aria-label="Return to Deck Sanctuary"
+          className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-obsidian-elevated/80 hover:bg-obsidian-surface border border-gold/30 hover:border-gold/60 text-gold-light backdrop-blur-md shadow-lg transition-all text-xs font-serif focus:outline-none focus:ring-2 focus:ring-gold"
+        >
+          <Compass className="h-3.5 w-3.5 text-gold group-hover:rotate-45 transition-transform" />
+          <span className="font-medium tracking-wide">Sanctuary</span>
+        </button>
+
+        {inspectorStage !== 'deck' && (
+          <button
+            type="button"
+            onClick={() => handleStageChange('grid')}
+            title="Return to Arcana Wheel"
+            aria-label="Return to Arcana Wheel"
+            className="px-3 py-1.5 rounded-full bg-obsidian-elevated/60 hover:bg-obsidian-surface border border-gold/20 hover:border-gold/40 text-slate-300 hover:text-gold-light backdrop-blur-md shadow-md transition-all text-xs font-serif"
+          >
+            Arcana Wheel
+          </button>
+        )}
+      </nav>
 
       <main className="flex-1 flex flex-col">
         <div className={isDeckOrLibrary ? 'block flex-1' : 'hidden'}>
@@ -71,10 +97,6 @@ export function App() {
           </div>
         )}
       </main>
-
-      <footer className="border-t border-gold/10 py-5 text-center text-xs text-slate-400 bg-obsidian-surface/40">
-        <p>Rider-Waite-Smith Reference Visualizer &bull; Built with React, Vite &amp; Tailwind CSS</p>
-      </footer>
     </div>
   );
 }

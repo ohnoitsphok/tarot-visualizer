@@ -21,8 +21,12 @@ const TarotCardViewBase: React.FC<TarotCardViewProps> = ({
   className = '',
 }) => {
   const [failedImageUrl, setFailedImageUrl] = useState<string | null>(null);
+  const baseUrl = import.meta.env.BASE_URL ?? '/';
+  const resolvedImageUrl = card.imageUrl.startsWith('/')
+    ? `${baseUrl.replace(/\/$/, '')}/${card.imageUrl.replace(/^\//, '')}`
+    : card.imageUrl;
   const isSafeUrl = card.imageUrl.startsWith('/cards/');
-  const imageError = !isSafeUrl || failedImageUrl === card.imageUrl;
+  const imageError = !isSafeUrl || failedImageUrl === resolvedImageUrl;
   const isReversed = orientation === 'reversed';
   const canFlip = Boolean(onFlip) || isFlipped;
 
@@ -41,14 +45,14 @@ const TarotCardViewBase: React.FC<TarotCardViewProps> = ({
       >
         {!imageError ? (
           <img
-            src={card.imageUrl}
+            src={resolvedImageUrl}
             alt={`${card.name} (${orientation})`}
             loading={loading}
             decoding="async"
             onLoad={() => {
               if (failedImageUrl !== null) setFailedImageUrl(null);
             }}
-            onError={() => setFailedImageUrl(card.imageUrl)}
+            onError={() => setFailedImageUrl(resolvedImageUrl)}
             className="w-full h-full object-cover"
           />
         ) : (

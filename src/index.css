@@ -105,6 +105,50 @@
   animation: deck-card-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
+/* Arcana Wheel Radial Deal Animation */
+@keyframes deal-outward-radial {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(1) rotate(var(--trot, 0deg));
+  }
+}
+
+.card-wheel-item {
+  animation: deal-outward-radial 0.65s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, z-index 0.28s;
+  will-change: transform;
+}
+
+.card-wheel-item:hover,
+.card-wheel-item:focus-visible {
+  transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(1.35) rotate(0deg) !important;
+  z-index: 40 !important;
+  box-shadow: 0 0 22px rgba(212, 175, 55, 0.8), 0 12px 28px rgba(0, 0, 0, 0.95);
+}
+
+/* Corner Minor Arcana Deal */
+@keyframes corner-deal-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.corner-suit-panel {
+  animation: corner-deal-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

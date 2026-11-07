@@ -35,28 +35,16 @@ function getContourPoints(spot: SymbolHotspot, isReversed: boolean): readonly Ho
   return base.map(([px, py]) => [100 - px, 100 - py] as const);
 }
 
-/** Converts polygon vertices into a closed C1-smooth quadratic bezier contour path. */
-function buildSmoothContourPath(points: readonly HotspotPoint[]): string {
+/** Converts polygon vertices into a tight, crisp contour silhouette path with rounded corners. */
+function buildTightSilhouettePath(points: readonly HotspotPoint[]): string {
   const n = points.length;
   if (n === 0) return '';
   if (n < 3) {
     return points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x} ${y}`).join(' ') + ' Z';
   }
 
-  const last = points[n - 1]!;
-  const first = points[0]!;
-  const startMidX = ((last[0] + first[0]) / 2).toFixed(2);
-  const startMidY = ((last[1] + first[1]) / 2).toFixed(2);
-
-  let d = `M ${startMidX} ${startMidY}`;
-  for (let i = 0; i < n; i++) {
-    const curr = points[i]!;
-    const next = points[(i + 1) % n]!;
-    const midX = ((curr[0] + next[0]) / 2).toFixed(2);
-    const midY = ((curr[1] + next[1]) / 2).toFixed(2);
-    d += ` Q ${curr[0].toFixed(2)} ${curr[1].toFixed(2)} ${midX} ${midY}`;
-  }
-  return `${d} Z`;
+  // Exact polygon contour tracing the silhouette
+  return points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`).join(' ') + ' Z';
 }
 
 function triggerHaptic(): void {
@@ -93,7 +81,7 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
       const pts = getContourPoints(spot, isReversed);
       const ys = pts.map(([, py]) => py);
       map.set(spot.id, {
-        pathData: buildSmoothContourPath(pts),
+        pathData: buildTightSilhouettePath(pts),
         minY: Math.min(...ys),
         maxY: Math.max(...ys),
       });
@@ -201,13 +189,13 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
 
           <filter
             id={`outline-glow-${uid}`}
-            x="-30%"
-            y="-30%"
-            width="160%"
-            height="160%"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
           >
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blurNear" />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2.6" result="blurFar" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.6" result="blurNear" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blurFar" />
             <feMerge>
               <feMergeNode in="blurFar" />
               <feMergeNode in="blurNear" />
@@ -242,7 +230,7 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
                   d={pathData}
                   fill={`url(#fine-grid-active-${uid})`}
                   stroke="#d4af37"
-                  strokeWidth="2.2"
+                  strokeWidth="1.2"
                   strokeLinejoin="round"
                   strokeLinecap="round"
                   filter={`url(#outline-glow-${uid})`}
