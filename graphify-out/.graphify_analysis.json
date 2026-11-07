@@ -1,0 +1,283 @@
+{
+  "communities": {
+    "0": [
+      "src_types_tarot",
+      "src_types_tarot_arcana",
+      "src_types_tarot_arcana_types",
+      "src_types_tarot_cardmeanings",
+      "src_types_tarot_cardnumerology",
+      "src_types_tarot_cardrank",
+      "src_types_tarot_cards_per_suit",
+      "src_types_tarot_court_ranks",
+      "src_types_tarot_courtrank",
+      "src_types_tarot_element",
+      "src_types_tarot_elements",
+      "src_types_tarot_hotspot_categories",
+      "src_types_tarot_hotspotcategory",
+      "src_types_tarot_libraryfilterstate",
+      "src_types_tarot_major_arcana_count",
+      "src_types_tarot_minor_arcana_count",
+      "src_types_tarot_orientations",
+      "src_types_tarot_rankfiltergroup",
+      "src_types_tarot_spreadcategory",
+      "src_types_tarot_spreaddefinition",
+      "src_types_tarot_spreadposition",
+      "src_types_tarot_suit",
+      "src_types_tarot_suits",
+      "src_types_tarot_symbolhotspot",
+      "src_types_tarot_tarotcard",
+      "src_types_tarot_usageguidesection",
+      "src_types_tarot_usageprinciple",
+      "src_types_tarot_usagetopiccategory"
+    ],
+    "1": [
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_postcss",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_devdependencies_vite",
+      "package_devdependencies_vitejs_plugin_react",
+      "package_name",
+      "package_private",
+      "package_type",
+      "package_version",
+      "ref_autoprefixer",
+      "ref_postcss",
+      "ref_tailwindcss",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_typescript",
+      "ref_vite",
+      "ref_vitejs_plugin_react",
+      "vite_config"
+    ],
+    "2": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowimportingtsextensions",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduledetection",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_nofallthroughcasesinswitch",
+      "tsconfig_compileroptions_nouncheckedindexedaccess",
+      "tsconfig_compileroptions_nounusedlocals",
+      "tsconfig_compileroptions_nounusedparameters",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_compileroptions_usedefineforclassfields",
+      "tsconfig_include",
+      "tsconfig_references"
+    ],
+    "3": [
+      "src_types_study",
+      "src_types_study_apptab",
+      "src_types_study_cardstudyrecord",
+      "src_types_study_initial_study_progress",
+      "src_types_study_mastery_levels",
+      "src_types_study_masterylevel",
+      "src_types_study_quiz_question_types",
+      "src_types_study_quizquestion",
+      "src_types_study_quizquestiontype",
+      "src_types_study_quizsessionresult",
+      "src_types_study_study_modes",
+      "src_types_study_study_schema_version",
+      "src_types_study_study_storage_key",
+      "src_types_study_studymode",
+      "src_types_study_studyprogressstate",
+      "src_types_tarot_cardorientation"
+    ],
+    "4": [
+      "package_dependencies",
+      "package_dependencies_lucide_react",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "ref_lucide_react",
+      "ref_react",
+      "ref_react_dom",
+      "src_app",
+      "src_app_app",
+      "src_index",
+      "src_main",
+      "src_main_rootelement",
+      "src_types_index",
+      "src_types_study_app_tabs",
+      "src_types_tarot_total_rws_cards"
+    ],
+    "5": [
+      "tsconfig_node",
+      "tsconfig_node_compileroptions",
+      "tsconfig_node_compileroptions_allowsyntheticdefaultimports",
+      "tsconfig_node_compileroptions_composite",
+      "tsconfig_node_compileroptions_emitdeclarationonly",
+      "tsconfig_node_compileroptions_lib",
+      "tsconfig_node_compileroptions_module",
+      "tsconfig_node_compileroptions_moduleresolution",
+      "tsconfig_node_compileroptions_noemit",
+      "tsconfig_node_compileroptions_outdir",
+      "tsconfig_node_compileroptions_skiplibcheck",
+      "tsconfig_node_compileroptions_strict",
+      "tsconfig_node_compileroptions_target",
+      "tsconfig_node_compileroptions_tsbuildinfofile",
+      "tsconfig_node_include"
+    ],
+    "6": [
+      "package_devdependencies_vitest",
+      "ref_vitest",
+      "src_tests_scaffolding_test",
+      "src_types_index_app_tabs",
+      "src_types_index_cards_per_suit",
+      "src_types_index_elements",
+      "src_types_index_initial_study_progress",
+      "src_types_index_major_arcana_count",
+      "src_types_index_minor_arcana_count",
+      "src_types_index_study_schema_version",
+      "src_types_index_suits",
+      "src_types_index_total_rws_cards",
+      "vitest_config"
+    ],
+    "7": [
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_preview",
+      "package_scripts_test",
+      "package_scripts_typecheck",
+      "package_scripts_verify"
+    ],
+    "8": [
+      "postcss_config"
+    ],
+    "9": [
+      "scripts_start_brave_debug"
+    ],
+    "10": [
+      "tailwind_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.07142857142857142,
+    "1": 0.1225296442687747,
+    "2": 0.09523809523809523,
+    "3": 0.13333333333333333,
+    "4": 0.1619047619047619,
+    "5": 0.13333333333333333,
+    "6": 0.15384615384615385,
+    "7": 0.25,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 18
+    },
+    {
+      "id": "tsconfig_node_compileroptions",
+      "label": "compilerOptions",
+      "degree": 13
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 8
+    },
+    {
+      "id": "ref_vitest",
+      "label": "vitest",
+      "degree": 4
+    },
+    {
+      "id": "src_types_tarot_cardorientation",
+      "label": "CardOrientation",
+      "degree": 3
+    },
+    {
+      "id": "ref_vite",
+      "label": "vite",
+      "degree": 3
+    },
+    {
+      "id": "ref_vitejs_plugin_react",
+      "label": "@vitejs/plugin-react",
+      "degree": 3
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "degree": 3
+    },
+    {
+      "id": "ref_react",
+      "label": "react",
+      "degree": 3
+    },
+    {
+      "id": "ref_react_dom",
+      "label": "react-dom",
+      "degree": 3
+    }
+  ],
+  "surprises": [
+    {
+      "source": "QuizQuestion",
+      "target": "CardOrientation",
+      "source_files": [
+        "src/types/study.ts",
+        "src/types/tarot.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `lucide-react` connect `compilerOptions` to `package.json`?",
+      "why": "High betweenness centrality (0.112) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `tarot.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `vitest` connect `scripts` to `package.json`?",
+      "why": "High betweenness centrality (0.108) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `package.json` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1225296442687747 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `scripts` connect `tailwind.config.js` to `package.json`?",
+      "why": "High betweenness centrality (0.070) - this node is a cross-community bridge."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `compilerOptions` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `App.tsx` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

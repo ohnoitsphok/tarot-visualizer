@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-ssr/
+.vite/
+coverage/
+graphify-out/20??-??-??/
+*.local
+.DS_Store
+Thumbs.db
