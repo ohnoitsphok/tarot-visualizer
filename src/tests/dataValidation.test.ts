@@ -43,7 +43,7 @@ describe('Phase 2 dataset integrity', () => {
     }
   });
 
-  it('keeps hotspots in bounds and spatially separated; every Major has at least 2', () => {
+  it('keeps hotspots and contour polygons in bounds and spatially separated; every Major has at least 2', () => {
     for (const c of CARDS) {
       if (c.arcana === 'major') {
         expect(c.hotspots.length).toBeGreaterThanOrEqual(2);
@@ -52,6 +52,10 @@ describe('Phase 2 dataset integrity', () => {
       for (let i = 0; i < c.hotspots.length; i++) {
         const h = c.hotspots[i]!;
         expect(isValidHotspotCoordinate(h.x) && isValidHotspotCoordinate(h.y)).toBe(true);
+        expect(h.polygon && h.polygon.length >= 4).toBe(true);
+        for (const [px, py] of h.polygon ?? []) {
+          expect(isValidHotspotCoordinate(px) && isValidHotspotCoordinate(py)).toBe(true);
+        }
         for (let j = i + 1; j < c.hotspots.length; j++) {
           const other = c.hotspots[j]!;
           expect(Math.hypot(h.x - other.x, h.y - other.y)).toBeGreaterThanOrEqual(12);

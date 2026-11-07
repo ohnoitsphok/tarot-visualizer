@@ -1,11 +1,14 @@
-import React, { memo, useState } from 'react';
-import type { HotspotCategory, SymbolHotspot } from '../../types';
+import React, { memo, useId, useMemo, useState } from 'react';
+import type { HotspotCategory, HotspotPoint, SymbolHotspot } from '../../types';
 
 export interface HotspotOverlayProps {
   readonly hotspots: readonly SymbolHotspot[];
   readonly activeHotspotId?: string | null;
+  readonly externalHoveredId?: string | null;
   readonly isReversed?: boolean;
+  readonly showFineGrid?: boolean;
   readonly onSelectHotspot?: (hotspot: SymbolHotspot | null) => void;
+  readonly onHoverHotspot?: (hotspotId: string | null) => void;
 }
 
 const CATEGORY_BADGES: Readonly<Record<HotspotCategory, string>> = Object.freeze({
@@ -17,16 +20,89 @@ const CATEGORY_BADGES: Readonly<Record<HotspotCategory, string>> = Object.freeze
   esoteric: 'bg-purple-950/90 text-purple-200 border-purple-700/60',
 });
 
+function getContourPoints(spot: SymbolHotspot, isReversed: boolean): readonly HotspotPoint[] {
+  const base: readonly HotspotPoint[] =
+    spot.polygon && spot.polygon.length >= 3
+      ? spot.polygon
+      : [
+          [Math.max(spot.x - 10, 4), Math.max(spot.y - 8, 4)],
+          [Math.min(spot.x + 10, 96), Math.max(spot.y - 8, 4)],
+          [Math.min(spot.x + 10, 96), Math.min(spot.y + 8, 96)],
+          [Math.max(spot.x - 10, 4), Math.min(spot.y + 8, 96)],
+        ];
+
+  if (!isReversed) return base;
+  return base.map(([px, py]) => [100 - px, 100 - py] as const);
+}
+
+/** Converts polygon vertices into a closed C1-smooth quadratic bezier contour path. */
+function buildSmoothContourPath(points: readonly HotspotPoint[]): string {
+  const n = points.length;
+  if (n === 0) return '';
+  if (n < 3) {
+    return points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x} ${y}`).join(' ') + ' Z';
+  }
+
+  const last = points[n - 1]!;
+  const first = points[0]!;
+  const startMidX = ((last[0] + first[0]) / 2).toFixed(2);
+  const startMidY = ((last[1] + first[1]) / 2).toFixed(2);
+
+  let d = `M ${startMidX} ${startMidY}`;
+  for (let i = 0; i < n; i++) {
+    const curr = points[i]!;
+    const next = points[(i + 1) % n]!;
+    const midX = ((curr[0] + next[0]) / 2).toFixed(2);
+    const midY = ((curr[1] + next[1]) / 2).toFixed(2);
+    d += ` Q ${curr[0].toFixed(2)} ${curr[1].toFixed(2)} ${midX} ${midY}`;
+  }
+  return `${d} Z`;
+}
+
+function triggerHaptic(): void {
+  try {
+    if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+      navigator.vibrate(12);
+    }
+  } catch {
+    // Ignore unsupported vibration environments
+  }
+}
+
 const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
   hotspots,
   activeHotspotId = null,
+  externalHoveredId,
   isReversed = false,
+  showFineGrid = true,
   onSelectHotspot,
+  onHoverHotspot,
 }) => {
-  const [hoveredHotspotId, setHoveredHotspotId] = useState<string | null>(null);
+  const uid = useId().replace(/:/g, '');
+  const [internalHoveredId, setInternalHoveredId] = useState<string | null>(null);
+
+  const isHoverControlled = externalHoveredId !== undefined;
+  const effectiveHoveredId = isHoverControlled ? externalHoveredId : internalHoveredId;
+
+  const contourGeometryById = useMemo(() => {
+    const map = new Map<
+      string,
+      { readonly pathData: string; readonly minY: number; readonly maxY: number }
+    >();
+    for (const spot of hotspots) {
+      const pts = getContourPoints(spot, isReversed);
+      const ys = pts.map(([, py]) => py);
+      map.set(spot.id, {
+        pathData: buildSmoothContourPath(pts),
+        minY: Math.min(...ys),
+        maxY: Math.max(...ys),
+      });
+    }
+    return map;
+  }, [hotspots, isReversed]);
 
   const displayedHotspot =
-    hotspots.find((h) => h.id === hoveredHotspotId) ??
+    hotspots.find((h) => h.id === effectiveHoveredId) ??
     hotspots.find((h) => h.id === activeHotspotId) ??
     null;
 
@@ -41,65 +117,194 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
       : displayedHotspot.y
     : 50;
 
-  return (
-    <div className="absolute inset-0 pointer-events-none z-20">
-      {hotspots.map((spot) => {
-        const isActive = spot.id === activeHotspotId;
-        const pinX = isReversed ? 100 - spot.x : spot.x;
-        const pinY = isReversed ? 100 - spot.y : spot.y;
-        const showPing = !activeHotspotId || isActive;
+  const displayedGeom = displayedHotspot ? contourGeometryById.get(displayedHotspot.id) : undefined;
+  const minY = displayedGeom ? displayedGeom.minY : dispY;
+  const maxY = displayedGeom ? displayedGeom.maxY : dispY;
 
-        return (
-          <button
-            key={spot.id}
-            type="button"
-            aria-label={`Symbol: ${spot.label}`}
-            aria-pressed={isActive}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (isActive) setHoveredHotspotId(null);
-              onSelectHotspot?.(isActive ? null : spot);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') {
-                setHoveredHotspotId(null);
-                onSelectHotspot?.(null);
-              }
-            }}
-            onMouseEnter={() => setHoveredHotspotId(spot.id)}
-            onMouseLeave={() => setHoveredHotspotId((prev) => (prev === spot.id ? null : prev))}
-            onFocus={() => setHoveredHotspotId(spot.id)}
-            onBlur={() => setHoveredHotspotId((prev) => (prev === spot.id ? null : prev))}
-            className="absolute pointer-events-auto h-7 w-7 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-gold rounded-full"
-            style={{ left: `${pinX}%`, top: `${pinY}%` }}
+  const handleHover = (id: string | null) => {
+    if (!isHoverControlled) {
+      setInternalHoveredId(id);
+    }
+    onHoverHotspot?.(id);
+  };
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-xl">
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        aria-label="Card symbolism interactive contour grid"
+      >
+        <defs>
+          <pattern
+            id={`fine-grid-minor-${uid}`}
+            width="2.5"
+            height="2.5"
+            patternUnits="userSpaceOnUse"
           >
-            <span className="relative flex h-5 w-5 items-center justify-center">
-              {showPing && (
-                <span
-                  aria-hidden="true"
-                  className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full opacity-60 bg-gold"
+            <path
+              d="M 2.5 0 L 0 0 0 2.5"
+              fill="none"
+              stroke="rgba(212, 175, 55, 0.13)"
+              strokeWidth="0.12"
+            />
+          </pattern>
+          <pattern
+            id={`fine-grid-major-${uid}`}
+            width="10"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect width="10" height="10" fill={`url(#fine-grid-minor-${uid})`} />
+            <path
+              d="M 10 0 L 0 0 0 10"
+              fill="none"
+              stroke="rgba(212, 175, 55, 0.24)"
+              strokeWidth="0.18"
+            />
+          </pattern>
+          <pattern
+            id={`fine-grid-active-${uid}`}
+            width="2"
+            height="2"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect width="2" height="2" fill="rgba(212, 175, 55, 0.14)" />
+            <path
+              d="M 2 0 L 0 0 0 2"
+              fill="none"
+              stroke="rgba(254, 240, 138, 0.42)"
+              strokeWidth="0.18"
+            />
+          </pattern>
+          <filter
+            id={`outline-glow-${uid}`}
+            x="-30%"
+            y="-30%"
+            width="160%"
+            height="160%"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.3" result="blurNear" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" result="blurFar" />
+            <feMerge>
+              <feMergeNode in="blurFar" />
+              <feMergeNode in="blurNear" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Fine Reference Coordinate Grid */}
+        {showFineGrid && (
+          <rect
+            x="0"
+            y="0"
+            width="100"
+            height="100"
+            fill={`url(#fine-grid-major-${uid})`}
+            className="pointer-events-none"
+          />
+        )}
+
+        {/* Interactive Symbol Contour Regions */}
+        {hotspots.map((spot) => {
+          const isActive = spot.id === activeHotspotId;
+          const isHighlighted = spot.id === displayedHotspot?.id;
+          const hasAnySelection = Boolean(displayedHotspot);
+          const pathData = contourGeometryById.get(spot.id)?.pathData ?? '';
+
+          return (
+            <g key={spot.id} className="pointer-events-auto">
+              {isHighlighted && (
+                <path
+                  d={pathData}
+                  fill={`url(#fine-grid-active-${uid})`}
+                  stroke="#d4af37"
+                  strokeWidth="2.2"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  filter={`url(#outline-glow-${uid})`}
+                  className="pointer-events-none"
                 />
               )}
-              <span
-                aria-hidden="true"
-                className={`relative inline-flex rounded-full h-3.5 w-3.5 border border-white/70 bg-gold shadow-md shadow-black transition-transform group-hover:scale-125 ${
-                  isActive ? 'ring-4 ring-gold-light scale-125 bg-white' : ''
-                }`}
+
+              <path
+                d={pathData}
+                role="button"
+                tabIndex={0}
+                aria-label={`Symbol: ${spot.label}`}
+                aria-pressed={isActive}
+                data-hotspot-id={spot.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  triggerHaptic();
+                  if (isActive) {
+                    handleHover(null);
+                    onSelectHotspot?.(null);
+                  } else {
+                    onSelectHotspot?.(spot);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    triggerHaptic();
+                    if (isActive) {
+                      handleHover(null);
+                      onSelectHotspot?.(null);
+                    } else {
+                      onSelectHotspot?.(spot);
+                    }
+                  } else if (e.key === 'Escape') {
+                    handleHover(null);
+                    onSelectHotspot?.(null);
+                  }
+                }}
+                onMouseEnter={() => handleHover(spot.id)}
+                onMouseLeave={() => {
+                  if (effectiveHoveredId === spot.id) handleHover(null);
+                }}
+                onFocus={() => handleHover(spot.id)}
+                onBlur={() => {
+                  if (effectiveHoveredId === spot.id) handleHover(null);
+                }}
+                fill={
+                  isHighlighted
+                    ? 'rgba(243, 217, 125, 0.12)'
+                    : hasAnySelection
+                      ? 'rgba(12, 13, 20, 0.01)'
+                      : 'rgba(212, 175, 55, 0.04)'
+                }
+                stroke={
+                  isHighlighted
+                    ? '#fef08a'
+                    : hasAnySelection
+                      ? 'rgba(212, 175, 55, 0.24)'
+                      : 'rgba(212, 175, 55, 0.55)'
+                }
+                strokeWidth={isHighlighted ? '0.85' : '0.45'}
+                strokeDasharray={isHighlighted ? undefined : '1.8 1.2'}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                className="cursor-pointer focus:outline-none"
+                style={{ pointerEvents: 'all' }}
               />
-            </span>
-          </button>
-        );
-      })}
+            </g>
+          );
+        })}
+      </svg>
 
       {displayedHotspot && (
         <div
           role="status"
-          className="absolute pointer-events-none z-30 -translate-x-1/2 w-56 max-w-[calc(100%-1rem)] rounded-lg border border-gold/40 bg-obsidian-elevated/95 p-3 shadow-2xl backdrop-blur-md text-left"
+          className="absolute pointer-events-none z-30 -translate-x-1/2 w-56 max-w-[calc(100%-1rem)] rounded-lg border border-gold/50 bg-obsidian-elevated/95 p-3 shadow-2xl backdrop-blur-md text-left"
           style={{
             left: `clamp(min(50%, 7.5rem), ${dispX}%, max(50%, calc(100% - 7.5rem)))`,
-            ...(dispY > 55
-              ? { bottom: `calc(${100 - dispY}% + 18px)` }
-              : { top: `calc(${dispY}% + 18px)` }),
+            ...(dispY > 52
+              ? { bottom: `calc(${Math.min(Math.max(100 - minY, 16), 72)}% + 10px)` }
+              : { top: `calc(${Math.min(Math.max(maxY, 16), 72)}% + 10px)` }),
           }}
         >
           <div className="flex items-center justify-between gap-1 mb-1.5">

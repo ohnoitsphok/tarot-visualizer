@@ -64,6 +64,8 @@ export interface CardNumerology {
   readonly theme: string;
 }
 
+export type HotspotPoint = readonly [number, number];
+
 export interface SymbolHotspot {
   readonly id: string;
   readonly label: string;
@@ -74,6 +76,8 @@ export interface SymbolHotspot {
   readonly category: HotspotCategory;
   readonly summary: string;
   readonly esotericMeaning: string;
+  /** Normalized (0..100) polygon contour vertices wrapping the visual element. */
+  readonly polygon?: readonly HotspotPoint[];
 }
 
 export interface CardMeanings {

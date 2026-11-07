@@ -1,6 +1,84 @@
 {
   "communities": {
     "0": [
+      "package_dependencies",
+      "package_dependencies_lucide_react",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "ref_lucide_react",
+      "ref_react",
+      "ref_react_dom",
+      "src_app",
+      "src_app_app",
+      "src_components_common_header",
+      "src_components_common_header_display_order",
+      "src_components_common_header_header",
+      "src_components_common_header_headerbase",
+      "src_components_common_header_headerprops",
+      "src_components_common_header_tab_config",
+      "src_components_common_tarotcardview",
+      "src_components_common_tarotcardview_tarotcardview",
+      "src_components_common_tarotcardview_tarotcardviewbase",
+      "src_components_common_tarotcardview_tarotcardviewprops",
+      "src_components_inspector_hotspotoverlay_hotspotoverlay",
+      "src_components_inspector_symbolinspector",
+      "src_components_inspector_symbolinspector_deckfilter",
+      "src_components_inspector_symbolinspector_filter_options",
+      "src_components_inspector_symbolinspector_flyoriginrect",
+      "src_components_inspector_symbolinspector_inspectorstage",
+      "src_components_inspector_symbolinspector_major_cards",
+      "src_components_inspector_symbolinspector_minor_cards",
+      "src_components_inspector_symbolinspector_search_index",
+      "src_components_inspector_symbolinspector_symbolinspector",
+      "src_components_inspector_symbolinspector_symbolinspectorprops",
+      "src_components_inspector_symbolinspector_triggerhaptic",
+      "src_index",
+      "src_main",
+      "src_main_rootelement",
+      "src_types_index_app_tabs",
+      "src_types_index_apptab",
+      "src_types_index_cardorientation",
+      "src_types_index_tarotcard"
+    ],
+    "1": [
+      "package_devdependencies_vitest",
+      "ref_node_fs",
+      "ref_node_path",
+      "ref_node_url",
+      "ref_vitest",
+      "src_data_cards_card_by_id",
+      "src_data_cards_cards",
+      "src_data_deepfreeze",
+      "src_data_deepfreeze_deepfreeze",
+      "src_data_spreads",
+      "src_data_spreads_build",
+      "src_data_spreads_celtic",
+      "src_data_spreads_cross",
+      "src_data_spreads_pos",
+      "src_data_spreads_spreads",
+      "src_data_spreads_three",
+      "src_data_usageguide",
+      "src_data_usageguide_usage_guide",
+      "src_tests_datavalidation_test",
+      "src_tests_datavalidation_test_dirname",
+      "src_tests_datavalidation_test_filename",
+      "src_tests_scaffolding_test",
+      "src_types_index",
+      "src_types_index_cards_per_suit",
+      "src_types_index_elements",
+      "src_types_index_initial_study_progress",
+      "src_types_index_isvalidhotspotcoordinate",
+      "src_types_index_major_arcana_count",
+      "src_types_index_minor_arcana_count",
+      "src_types_index_spreaddefinition",
+      "src_types_index_study_schema_version",
+      "src_types_index_suits",
+      "src_types_index_tarot_card_aspect_ratio",
+      "src_types_index_total_rws_cards",
+      "src_types_index_usageguidesection",
+      "vitest_config"
+    ],
+    "2": [
       "src_types_tarot",
       "src_types_tarot_arcana",
       "src_types_tarot_arcana_types",
@@ -16,6 +94,7 @@
       "src_types_tarot_hotspot_max_percent",
       "src_types_tarot_hotspot_min_percent",
       "src_types_tarot_hotspotcategory",
+      "src_types_tarot_hotspotpoint",
       "src_types_tarot_isvalidhotspotcoordinate",
       "src_types_tarot_libraryfilterstate",
       "src_types_tarot_major_arcana_count",
@@ -35,41 +114,34 @@
       "src_types_tarot_usageprinciple",
       "src_types_tarot_usagetopiccategory"
     ],
-    "1": [
-      "ref_node_fs",
-      "ref_node_path",
-      "ref_node_url",
-      "src_data_deepfreeze",
-      "src_data_deepfreeze_deepfreeze",
-      "src_data_spreads",
-      "src_data_spreads_build",
-      "src_data_spreads_celtic",
-      "src_data_spreads_cross",
-      "src_data_spreads_pos",
-      "src_data_spreads_spreads",
-      "src_data_spreads_three",
-      "src_data_usageguide",
-      "src_data_usageguide_usage_guide",
-      "src_tests_datavalidation_test",
-      "src_tests_datavalidation_test_dirname",
-      "src_tests_datavalidation_test_filename",
-      "src_tests_scaffolding_test",
-      "src_types_index",
-      "src_types_index_app_tabs",
-      "src_types_index_cards_per_suit",
-      "src_types_index_elements",
-      "src_types_index_initial_study_progress",
-      "src_types_index_isvalidhotspotcoordinate",
-      "src_types_index_major_arcana_count",
-      "src_types_index_minor_arcana_count",
-      "src_types_index_spreaddefinition",
-      "src_types_index_study_schema_version",
-      "src_types_index_suits",
-      "src_types_index_tarot_card_aspect_ratio",
-      "src_types_index_total_rws_cards",
-      "src_types_index_usageguidesection"
+    "3": [
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_postcss",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_devdependencies_vite",
+      "package_devdependencies_vitejs_plugin_react",
+      "package_name",
+      "package_private",
+      "package_type",
+      "package_version",
+      "ref_autoprefixer",
+      "ref_postcss",
+      "ref_tailwindcss",
+      "ref_types_node",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_typescript",
+      "ref_vite",
+      "ref_vitejs_plugin_react",
+      "vite_config"
     ],
-    "2": [
+    "4": [
       "src_data_cards",
       "src_data_cards_cap",
       "src_data_cards_court_themes",
@@ -84,10 +156,6 @@
       "src_data_cards_roman",
       "src_data_cards_slug",
       "src_data_cards_themes",
-      "src_data_majorarcana",
-      "src_data_majorarcana_hotspotrow",
-      "src_data_majorarcana_major_rows",
-      "src_data_majorarcana_majorrow",
       "src_data_minorarcana",
       "src_data_minorarcana_minor_rows",
       "src_data_minorarcana_minorrow",
@@ -96,41 +164,9 @@
       "src_types_index_cardnumerology",
       "src_types_index_cardrank",
       "src_types_index_court_ranks",
-      "src_types_index_element",
-      "src_types_index_hotspotcategory",
       "src_types_index_suit"
     ],
-    "3": [
-      "package",
-      "package_devdependencies",
-      "package_devdependencies_autoprefixer",
-      "package_devdependencies_postcss",
-      "package_devdependencies_tailwindcss",
-      "package_devdependencies_types_node",
-      "package_devdependencies_types_react",
-      "package_devdependencies_types_react_dom",
-      "package_devdependencies_typescript",
-      "package_devdependencies_vite",
-      "package_devdependencies_vitejs_plugin_react",
-      "package_devdependencies_vitest",
-      "package_name",
-      "package_private",
-      "package_type",
-      "package_version",
-      "ref_autoprefixer",
-      "ref_postcss",
-      "ref_tailwindcss",
-      "ref_types_node",
-      "ref_types_react",
-      "ref_types_react_dom",
-      "ref_typescript",
-      "ref_vite",
-      "ref_vitejs_plugin_react",
-      "ref_vitest",
-      "vite_config",
-      "vitest_config"
-    ],
-    "4": [
+    "5": [
       "tsconfig",
       "tsconfig_compileroptions",
       "tsconfig_compileroptions_allowimportingtsextensions",
@@ -153,49 +189,7 @@
       "tsconfig_include",
       "tsconfig_references"
     ],
-    "5": [
-      "package_dependencies",
-      "package_dependencies_lucide_react",
-      "package_dependencies_react",
-      "package_dependencies_react_dom",
-      "ref_lucide_react",
-      "ref_react",
-      "ref_react_dom",
-      "src_app",
-      "src_app_app",
-      "src_components_common_header",
-      "src_components_common_header_display_order",
-      "src_components_common_header_header",
-      "src_components_common_header_headerbase",
-      "src_components_common_header_headerprops",
-      "src_components_common_header_tab_config",
-      "src_index",
-      "src_main",
-      "src_main_rootelement",
-      "src_types_index_apptab"
-    ],
     "6": [
-      "src_components_common_tarotcardview",
-      "src_components_common_tarotcardview_tarotcardview",
-      "src_components_common_tarotcardview_tarotcardviewbase",
-      "src_components_common_tarotcardview_tarotcardviewprops",
-      "src_components_inspector_hotspotoverlay",
-      "src_components_inspector_hotspotoverlay_category_badges",
-      "src_components_inspector_hotspotoverlay_hotspotoverlay",
-      "src_components_inspector_hotspotoverlay_hotspotoverlaybase",
-      "src_components_inspector_hotspotoverlay_hotspotoverlayprops",
-      "src_components_inspector_symbolinspector",
-      "src_components_inspector_symbolinspector_major_cards",
-      "src_components_inspector_symbolinspector_minor_cards",
-      "src_components_inspector_symbolinspector_search_index",
-      "src_components_inspector_symbolinspector_symbolinspector",
-      "src_data_cards_card_by_id",
-      "src_data_cards_cards",
-      "src_types_index_cardorientation",
-      "src_types_index_symbolhotspot",
-      "src_types_index_tarotcard"
-    ],
-    "7": [
       "src_types_study",
       "src_types_study_app_tabs",
       "src_types_study_apptab",
@@ -213,6 +207,23 @@
       "src_types_study_studymode",
       "src_types_study_studyprogressstate",
       "src_types_tarot_cardorientation"
+    ],
+    "7": [
+      "src_components_inspector_hotspotoverlay",
+      "src_components_inspector_hotspotoverlay_buildsmoothcontourpath",
+      "src_components_inspector_hotspotoverlay_category_badges",
+      "src_components_inspector_hotspotoverlay_getcontourpoints",
+      "src_components_inspector_hotspotoverlay_hotspotoverlaybase",
+      "src_components_inspector_hotspotoverlay_hotspotoverlayprops",
+      "src_components_inspector_hotspotoverlay_triggerhaptic",
+      "src_data_majorarcana",
+      "src_data_majorarcana_hotspotrow",
+      "src_data_majorarcana_major_rows",
+      "src_data_majorarcana_majorrow",
+      "src_types_index_element",
+      "src_types_index_hotspotcategory",
+      "src_types_index_hotspotpoint",
+      "src_types_index_symbolhotspot"
     ],
     "8": [
       "tsconfig_node",
@@ -263,14 +274,14 @@
     ]
   },
   "cohesion": {
-    "0": 0.06060606060606061,
-    "1": 0.08669354838709678,
-    "2": 0.0960591133004926,
-    "3": 0.10052910052910052,
-    "4": 0.09523809523809523,
-    "5": 0.15789473684210525,
-    "6": 0.14619883040935672,
-    "7": 0.125,
+    "0": 0.08250355618776671,
+    "1": 0.0761904761904762,
+    "2": 0.058823529411764705,
+    "3": 0.11333333333333333,
+    "4": 0.12648221343873517,
+    "5": 0.09523809523809523,
+    "6": 0.125,
+    "7": 0.17142857142857143,
     "8": 0.13333333333333333,
     "9": 0.3611111111111111,
     "10": 0.25,
@@ -290,23 +301,23 @@
       "degree": 13
     },
     {
-      "id": "package_scripts",
-      "label": "scripts",
-      "degree": 8
-    },
-    {
       "id": "ref_react",
       "label": "react",
       "degree": 8
     },
     {
-      "id": "src_components_inspector_symbolinspector_symbolinspector",
-      "label": "SymbolInspector()",
-      "degree": 5
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 8
     },
     {
-      "id": "src_data_cards_major",
-      "label": "major",
+      "id": "src_components_inspector_symbolinspector_symbolinspector",
+      "label": "SymbolInspector()",
+      "degree": 6
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
       "degree": 5
     },
     {
@@ -315,33 +326,22 @@
       "degree": 5
     },
     {
-      "id": "ref_lucide_react",
-      "label": "lucide-react",
+      "id": "src_data_cards_major",
+      "label": "major",
       "degree": 5
+    },
+    {
+      "id": "src_app_app",
+      "label": "App()",
+      "degree": 4
     },
     {
       "id": "src_data_deepfreeze_deepfreeze",
       "label": "deepFreeze()",
       "degree": 4
-    },
-    {
-      "id": "src_data_cards_digitroot",
-      "label": "digitRoot()",
-      "degree": 4
     }
   ],
   "surprises": [
-    {
-      "source": "App()",
-      "target": "SymbolInspector()",
-      "source_files": [
-        "src/App.tsx",
-        "src/components/inspector/SymbolInspector.tsx"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "bridges separate communities"
-    },
     {
       "source": "QuizQuestion",
       "target": "CardOrientation",
@@ -359,6 +359,17 @@
       "source_files": [
         "src/App.tsx",
         "src/components/common/Header.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "App()",
+      "target": "SymbolInspector()",
+      "source_files": [
+        "src/App.tsx",
+        "src/components/inspector/SymbolInspector.tsx"
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
@@ -390,38 +401,38 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `react` connect `study.ts` to `App.tsx`, `scripts`?",
-      "why": "High betweenness centrality (0.084) - this node is a cross-community bridge."
+      "question": "Why does `react` connect `tarot.ts` to `App.tsx`, `tailwind.config.js`?",
+      "why": "High betweenness centrality (0.089) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `tarot.ts` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.08250355618776671 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `vitest` connect `App.tsx` to `package.json`?",
-      "why": "High betweenness centrality (0.080) - this node is a cross-community bridge."
+      "question": "Why does `vitest` connect `package.json` to `App.tsx`?",
+      "why": "High betweenness centrality (0.073) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `package.json` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.08669354838709678 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.0761904761904762 - nodes in this community are weakly interconnected."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `lucide-react` connect `study.ts` to `App.tsx`, `scripts`?",
-      "why": "High betweenness centrality (0.050) - this node is a cross-community bridge."
+      "question": "Why does `lucide-react` connect `tarot.ts` to `App.tsx`?",
+      "why": "High betweenness centrality (0.051) - this node is a cross-community bridge."
     },
     {
       "type": "low_cohesion",
       "question": "Should `compilerOptions` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.0960591133004926 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",
       "question": "Should `App.tsx` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.10052910052910052 - nodes in this community are weakly interconnected."
+      "why": "Cohesion score 0.11333333333333333 - nodes in this community are weakly interconnected."
     }
   ]
 }

@@ -34,7 +34,7 @@ function meanings(name: string, o: CardOrientation, keywords: string, fullMeanin
 }
 
 function hotspots(cardId: string, rows: (typeof MAJOR_ROWS)[number][9]): readonly SymbolHotspot[] {
-  return rows.map(([label, x, y, category, summary, esotericMeaning]) => ({
+  return rows.map(([label, x, y, category, summary, esotericMeaning, polygon]) => ({
     id: `${cardId}-${slug(label)}`,
     label,
     x,
@@ -42,6 +42,7 @@ function hotspots(cardId: string, rows: (typeof MAJOR_ROWS)[number][9]): readonl
     category,
     summary,
     esotericMeaning,
+    polygon,
   }));
 }
 

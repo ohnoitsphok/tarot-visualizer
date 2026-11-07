@@ -25,6 +25,55 @@
   }
 }
 
+@keyframes mystic-tremor {
+  0%, 100% {
+    transform: translate3d(0, -6px, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate3d(-1.5px, -7px, 0) rotate(-0.35deg);
+  }
+  40% {
+    transform: translate3d(1.5px, -5px, 0) rotate(0.35deg);
+  }
+  60% {
+    transform: translate3d(-1px, -6.5px, 0) rotate(0.2deg);
+  }
+  80% {
+    transform: translate3d(1px, -5.5px, 0) rotate(-0.2deg);
+  }
+}
+
+.mystic-hover-interactive {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms ease;
+}
+
+.mystic-hover-interactive:hover,
+.mystic-hover-interactive:focus-visible,
+.mystic-hover-interactive:active {
+  box-shadow:
+    0 0 24px rgba(243, 217, 125, 0.65),
+    0 0 54px rgba(212, 175, 55, 0.32),
+    0 16px 34px rgba(0, 0, 0, 0.9);
+  animation: mystic-tremor 0.28s infinite ease-in-out;
+}
+
+@keyframes deck-card-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.88) rotate(-2.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+
+.deck-card-deal {
+  animation: deck-card-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
