@@ -57,6 +57,7 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
             aria-pressed={isActive}
             onClick={(e) => {
               e.stopPropagation();
+              if (isActive) setHoveredHotspotId(null);
               onSelectHotspot?.(isActive ? null : spot);
             }}
             onKeyDown={(e) => {
@@ -93,10 +94,12 @@ const HotspotOverlayBase: React.FC<HotspotOverlayProps> = ({
       {displayedHotspot && (
         <div
           role="status"
-          className="absolute pointer-events-auto z-30 -translate-x-1/2 transition-all duration-200 w-56 rounded-lg border border-gold/40 bg-obsidian-elevated/95 p-3 shadow-2xl backdrop-blur-md text-left"
+          className="absolute pointer-events-none z-30 -translate-x-1/2 w-56 max-w-[calc(100%-1rem)] rounded-lg border border-gold/40 bg-obsidian-elevated/95 p-3 shadow-2xl backdrop-blur-md text-left"
           style={{
-            left: `${Math.min(Math.max(dispX, 24), 76)}%`,
-            top: dispY > 58 ? `${Math.max(dispY - 26, 4)}%` : `${Math.min(dispY + 8, 72)}%`,
+            left: `clamp(min(50%, 7.5rem), ${dispX}%, max(50%, calc(100% - 7.5rem)))`,
+            ...(dispY > 55
+              ? { bottom: `calc(${100 - dispY}% + 18px)` }
+              : { top: `calc(${dispY}% + 18px)` }),
           }}
         >
           <div className="flex items-center justify-between gap-1 mb-1.5">

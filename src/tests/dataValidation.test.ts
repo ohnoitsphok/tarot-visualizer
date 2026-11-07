@@ -43,11 +43,19 @@ describe('Phase 2 dataset integrity', () => {
     }
   });
 
-  it('keeps hotspots in bounds; every Major has at least 2', () => {
+  it('keeps hotspots in bounds and spatially separated; every Major has at least 2', () => {
     for (const c of CARDS) {
-      if (c.arcana === 'major') expect(c.hotspots.length).toBeGreaterThanOrEqual(2);
-      for (const h of c.hotspots) {
+      if (c.arcana === 'major') {
+        expect(c.hotspots.length).toBeGreaterThanOrEqual(2);
+        expect(new Set(c.hotspots.map((h) => h.x)).size).toBeGreaterThan(1);
+      }
+      for (let i = 0; i < c.hotspots.length; i++) {
+        const h = c.hotspots[i]!;
         expect(isValidHotspotCoordinate(h.x) && isValidHotspotCoordinate(h.y)).toBe(true);
+        for (let j = i + 1; j < c.hotspots.length; j++) {
+          const other = c.hotspots[j]!;
+          expect(Math.hypot(h.x - other.x, h.y - other.y)).toBeGreaterThanOrEqual(12);
+        }
       }
     }
   });

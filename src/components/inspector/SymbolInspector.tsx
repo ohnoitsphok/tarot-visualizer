@@ -51,17 +51,22 @@ export const SymbolInspector: React.FC = () => {
     setOrientation((prev) => (prev === 'upright' ? 'reversed' : 'upright'));
   };
 
-  const currentMeaning = orientation === 'upright' ? selectedCard.upright : selectedCard.reversed;
+  const isReversed = orientation === 'reversed';
+  const currentMeaning = isReversed ? selectedCard.reversed : selectedCard.upright;
 
-  const hotspotOverlay =
-    selectedCard.hotspots.length > 0 ? (
-      <HotspotOverlay
-        hotspots={selectedCard.hotspots}
-        activeHotspotId={activeHotspotId}
-        isReversed={orientation === 'reversed'}
-        onSelectHotspot={handleSelectHotspot}
-      />
-    ) : null;
+  const hotspotOverlay = useMemo(
+    () =>
+      selectedCard.hotspots.length > 0 ? (
+        <HotspotOverlay
+          key={selectedCard.id}
+          hotspots={selectedCard.hotspots}
+          activeHotspotId={activeHotspotId}
+          isReversed={isReversed}
+          onSelectHotspot={handleSelectHotspot}
+        />
+      ) : null,
+    [selectedCard.id, selectedCard.hotspots, activeHotspotId, isReversed, handleSelectHotspot],
+  );
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

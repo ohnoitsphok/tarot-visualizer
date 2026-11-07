@@ -1,4 +1,4 @@
-# Graph Report - tarot-visualizer  (2026-11-07)
+# Graph Report - tarot-visualizer  (2026-11-08)
 
 ## Corpus Check
 - cluster-only mode — file stats not available
@@ -9,7 +9,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `779f1a4c`
+- Built from commit: `9c8b6d2c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
