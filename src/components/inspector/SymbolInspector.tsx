@@ -474,98 +474,91 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
 
   // STAGE 2: PRE-FILTERED ARCANA MANDALA (22 MAJOR IN CENTER RING, 4 MINOR IN 4 CORNERS)
   if (stage === 'grid') {
-    return (
-      <section
-        aria-label="Arcana Mandala & Card Gallery"
-        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4"
-      >
-        {/* Navigation & View Toggle Bar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-obsidian-surface/90 border border-gold/25 p-3 rounded-xl shadow-xl backdrop-blur-md">
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => updateStage('deck')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
-            >
-              <Layers className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-              <span>Seal Deck</span>
-            </button>
+    if (viewLayout === 'wheel') {
+      return (
+        <section
+          aria-label="Arcana Mandala & Card Wheel"
+          className="fixed inset-0 z-20 w-screen h-screen overflow-hidden flex flex-col justify-between p-3 sm:p-5 bg-obsidian select-none"
+        >
+          {/* Top Navigation & View Toggle Bar (Floating across top) */}
+          <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 z-40 relative px-2 shrink-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => updateStage('deck')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+              >
+                <Layers className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
+                <span>Seal Deck</span>
+              </button>
 
-            <div className="flex items-center rounded-lg border border-gold/20 bg-obsidian-elevated/60 p-0.5 text-xs">
-              <button
-                type="button"
-                onClick={() => setViewLayout('wheel')}
-                className={`px-3 py-1 rounded-md font-serif transition-colors ${
-                  viewLayout === 'wheel'
-                    ? 'bg-gold text-obsidian font-semibold shadow'
-                    : 'text-slate-300 hover:text-slate-100'
-                }`}
-              >
-                Arcana Wheel
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewLayout('catalog')}
-                className={`px-3 py-1 rounded-md font-serif transition-colors ${
-                  viewLayout === 'catalog'
-                    ? 'bg-gold text-obsidian font-semibold shadow'
-                    : 'text-slate-300 hover:text-slate-100'
-                }`}
-              >
-                All 78 Cards
-              </button>
+              <div className="flex items-center rounded-lg border border-gold/20 bg-obsidian-elevated/80 backdrop-blur-md p-0.5 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setViewLayout('wheel')}
+                  className="px-3 py-1 rounded-md font-serif bg-gold text-obsidian font-semibold shadow"
+                >
+                  Arcana Wheel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewLayout('catalog')}
+                  className="px-3 py-1 rounded-md font-serif text-slate-300 hover:text-slate-100 transition-colors"
+                >
+                  All 78 Cards
+                </button>
+              </div>
+            </div>
+
+            <div className="relative w-full sm:w-64">
+              <Search
+                className="absolute left-3 top-2.5 h-4 w-4 text-slate-400"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                aria-label="Filter deck"
+                maxLength={80}
+                placeholder="Search cards..."
+                value={searchQuery}
+                onChange={(e) => {
+                  const val = e.target.value.slice(0, 80);
+                  setSearchQuery(val);
+                  if (val) {
+                    setViewLayout('catalog');
+                  }
+                }}
+                className="w-full bg-obsidian-elevated/80 backdrop-blur-md border border-gold/25 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gold"
+              />
             </div>
           </div>
 
-          <div className="relative w-full sm:w-64">
-            <Search
-              className="absolute left-3 top-2.5 h-4 w-4 text-slate-400"
-              aria-hidden="true"
-            />
-            <input
-              type="search"
-              aria-label="Filter deck"
-              maxLength={80}
-              placeholder="Search cards..."
-              value={searchQuery}
-              onChange={(e) => {
-                const val = e.target.value.slice(0, 80);
-                setSearchQuery(val);
-                if (val && viewLayout === 'wheel') {
-                  setViewLayout('catalog');
-                }
-              }}
-              className="w-full bg-obsidian-elevated border border-gold/25 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gold"
-            />
-          </div>
-        </div>
-
-        {viewLayout === 'wheel' ? (
-          <div className="relative w-full min-h-[660px] sm:min-h-[780px] flex items-center justify-center overflow-hidden py-4 select-none">
+          {/* Fullscreen Dynamic Mandala Canvas */}
+          <div className="flex-1 w-full relative flex items-center justify-center overflow-hidden my-auto">
             {/* Center Rotating Magic Circle Background */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <MagicCircleBackground
-                size="min(82vw, 680px)"
+                size="min(68vw, 68vh, 560px)"
                 className="opacity-20 text-gold"
                 rotate
               />
             </div>
 
             {/* Central Identity Hub */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center z-20 w-36 sm:w-48 p-4 rounded-full border border-gold/30 bg-obsidian-elevated/90 backdrop-blur-md shadow-2xl flex flex-col items-center justify-center aspect-square transition-all duration-200">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-gold">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center z-20 w-32 sm:w-44 p-3 sm:p-4 rounded-full border border-gold/30 bg-obsidian-elevated/90 backdrop-blur-md shadow-2xl flex flex-col items-center justify-center aspect-square transition-all duration-200">
+              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-gold">
                 {hoveredWheelCard ? `Arcana ${hoveredWheelCard.numerology.numeral}` : 'Major Arcana'}
               </span>
-              <h3 className="font-serif text-xs sm:text-sm font-bold text-gold-light truncate max-w-full px-2 mt-0.5">
+              <h3 className="font-serif text-xs sm:text-sm font-bold text-gold-light truncate max-w-full px-1 sm:px-2 mt-0.5">
                 {hoveredWheelCard ? hoveredWheelCard.name : 'The 22 Keys'}
               </h3>
-              <p className="text-[9px] text-slate-300 italic truncate max-w-full px-2 mt-0.5">
+              <p className="text-[8px] sm:text-[9px] text-slate-300 italic truncate max-w-full px-1 sm:px-2 mt-0.5">
                 {hoveredWheelCard ? hoveredWheelCard.archetype : 'Hover card to reveal'}
               </p>
             </div>
 
             {/* 22 Major Arcana Cards Arranged in Outer Circular Ring */}
-            <div className="relative w-[min(90vw,680px)] h-[min(90vw,680px)] pointer-events-auto">
+            <div className="relative w-[min(68vw,68vh,560px)] h-[min(68vw,68vh,560px)] pointer-events-auto">
               {MAJOR_CARDS.map((card, index) => {
                 const theta = -Math.PI / 2 + (index * 2 * Math.PI) / 22;
                 const radiusPercent = 38.5;
@@ -596,7 +589,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                       ['--ty' as string]: '0px',
                       ['--trot' as string]: `${rotDeg}deg`,
                     }}
-                    className="absolute card-wheel-item w-10 sm:w-14 md:w-16 aspect-tarot rounded-lg overflow-hidden border border-gold/40 hover:border-gold shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
+                    className="absolute card-wheel-item w-9 sm:w-11 md:w-13 aspect-tarot rounded-lg overflow-hidden border border-gold/40 hover:border-gold shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
                   >
                     <TarotCardView
                       card={card}
@@ -607,26 +600,81 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                 );
               })}
             </div>
+          </div>
 
-            {/* 4 Corner Minor Arcana Hubs */}
-            {/* Top-Left: Wands (Fire) */}
-            <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-30 corner-suit-panel">
-              {renderCornerSuit(CORNER_SUIT_CONFIG[0])}
-            </div>
-            {/* Top-Right: Cups (Water) */}
-            <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-30 corner-suit-panel">
-              {renderCornerSuit(CORNER_SUIT_CONFIG[1])}
-            </div>
-            {/* Bottom-Left: Swords (Air) */}
-            <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 z-30 corner-suit-panel">
-              {renderCornerSuit(CORNER_SUIT_CONFIG[2])}
-            </div>
-            {/* Bottom-Right: Pentacles (Earth) */}
-            <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 z-30 corner-suit-panel">
-              {renderCornerSuit(CORNER_SUIT_CONFIG[3])}
+          {/* 4 Corner Minor Arcana Panels - Anchored to True Viewport Corners */}
+          {/* Top-Left: Wands (Fire) */}
+          <div className="absolute top-16 sm:top-20 left-4 sm:left-6 z-30 corner-suit-panel">
+            {renderCornerSuit(CORNER_SUIT_CONFIG[0])}
+          </div>
+          {/* Top-Right: Cups (Water) */}
+          <div className="absolute top-16 sm:top-20 right-4 sm:right-6 z-30 corner-suit-panel">
+            {renderCornerSuit(CORNER_SUIT_CONFIG[1])}
+          </div>
+          {/* Bottom-Left: Swords (Air) */}
+          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-30 corner-suit-panel">
+            {renderCornerSuit(CORNER_SUIT_CONFIG[2])}
+          </div>
+          {/* Bottom-Right: Pentacles (Earth) */}
+          <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-30 corner-suit-panel">
+            {renderCornerSuit(CORNER_SUIT_CONFIG[3])}
+          </div>
+        </section>
+      );
+    }
+
+    /* Catalog 78-Card Grid View */
+    return (
+      <section
+        aria-label="Opened Tarot Card Gallery"
+        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6"
+      >
+        {/* Navigation & View Toggle Bar */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-obsidian-surface/90 border border-gold/25 p-3 rounded-xl shadow-xl backdrop-blur-md">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => updateStage('deck')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            >
+              <Layers className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
+              <span>Seal Deck</span>
+            </button>
+
+            <div className="flex items-center rounded-lg border border-gold/20 bg-obsidian-elevated/60 p-0.5 text-xs">
+              <button
+                type="button"
+                onClick={() => setViewLayout('wheel')}
+                className="px-3 py-1 rounded-md font-serif text-slate-300 hover:text-slate-100 transition-colors"
+              >
+                Arcana Wheel
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewLayout('catalog')}
+                className="px-3 py-1 rounded-md font-serif bg-gold text-obsidian font-semibold shadow"
+              >
+                All 78 Cards
+              </button>
             </div>
           </div>
-        ) : (
+
+          <div className="relative w-full sm:w-64">
+            <Search
+              className="absolute left-3 top-2.5 h-4 w-4 text-slate-400"
+              aria-hidden="true"
+            />
+            <input
+              type="search"
+              aria-label="Filter deck"
+              maxLength={80}
+              placeholder="Search cards..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value.slice(0, 80))}
+              className="w-full bg-obsidian-elevated border border-gold/25 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gold"
+            />
+          </div>
+        </div>
           /* Card Grid Catalog with Smooth Float Hover (card-item-hover) */
           <div className="space-y-4">
             <div
@@ -711,7 +759,6 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               </div>
             )}
           </div>
-        )}
       </section>
     );
   }

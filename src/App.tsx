@@ -25,23 +25,23 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-obsidian text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-gold-light relative">
-      {/* Subtle Persistent Floating Seal Button for Universal Return / Navigation */}
-      <nav
-        aria-label="Sanctuary Navigation"
-        className="fixed top-4 left-4 z-50 flex items-center gap-2"
-      >
-        <button
-          type="button"
-          onClick={() => handleSelectTab('inspector')}
-          title="Return to Deck Sanctuary"
-          aria-label="Return to Deck Sanctuary"
-          className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-obsidian-elevated/80 hover:bg-obsidian-surface border border-gold/30 hover:border-gold/60 text-gold-light backdrop-blur-md shadow-lg transition-all text-xs font-serif focus:outline-none focus:ring-2 focus:ring-gold"
+      {/* Persistent Floating Seal Button for Detail & Study views */}
+      {(inspectorStage === 'detail' || activeTab === 'study' || activeTab === 'spreads') && (
+        <nav
+          aria-label="Sanctuary Navigation"
+          className="fixed top-4 left-4 z-50 flex items-center gap-2"
         >
-          <Compass className="h-3.5 w-3.5 text-gold group-hover:rotate-45 transition-transform" />
-          <span className="font-medium tracking-wide">Sanctuary</span>
-        </button>
+          <button
+            type="button"
+            onClick={() => handleSelectTab('inspector')}
+            title="Return to Deck Sanctuary"
+            aria-label="Return to Deck Sanctuary"
+            className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-obsidian-elevated/80 hover:bg-obsidian-surface border border-gold/30 hover:border-gold/60 text-gold-light backdrop-blur-md shadow-lg transition-all text-xs font-serif focus:outline-none focus:ring-2 focus:ring-gold"
+          >
+            <Compass className="h-3.5 w-3.5 text-gold group-hover:rotate-45 transition-transform" />
+            <span className="font-medium tracking-wide">Sanctuary</span>
+          </button>
 
-        {inspectorStage !== 'deck' && (
           <button
             type="button"
             onClick={() => handleStageChange('grid')}
@@ -51,11 +51,11 @@ export function App() {
           >
             Arcana Wheel
           </button>
-        )}
-      </nav>
+        </nav>
+      )}
 
-      <main className="flex-1 flex flex-col">
-        <div className={isDeckOrLibrary ? 'block flex-1' : 'hidden'}>
+      <main className="flex-1 flex flex-col w-full min-h-screen">
+        <div className={isDeckOrLibrary ? 'block flex-1 w-full min-h-screen' : 'hidden'}>
           <SymbolInspector stage={inspectorStage} onStageChange={handleStageChange} />
         </div>
 
