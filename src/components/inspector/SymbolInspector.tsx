@@ -231,6 +231,39 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
     }
   };
 
+  // Progressive background idle preloading for instant zero-latency card transitions
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const preloadUrl = (url: string) => {
+      const img = new Image();
+      img.decoding = 'async';
+      const baseUrl = import.meta.env.BASE_URL ?? '/';
+      img.src = url.startsWith('/') ? `${baseUrl.replace(/\/$/, '')}/${url.replace(/^\//, '')}` : url;
+    };
+
+    const idle = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 120));
+    const handle = idle(() => {
+      // 1. Preload 22 Major Arcana cards progressively
+      MAJOR_CARDS.forEach((c) => preloadUrl(c.imageUrl));
+
+      // 2. Preload adjacent cards in active pool
+      const pool = filteredCards.length > 0 ? filteredCards : CARDS;
+      const curIdx = pool.findIndex((c) => c.id === selectedCardId);
+      if (curIdx !== -1) {
+        [-2, -1, 1, 2].forEach((offset) => {
+          const target = pool[(curIdx + offset + pool.length) % pool.length];
+          if (target) preloadUrl(target.imageUrl);
+        });
+      }
+    });
+
+    return () => {
+      if (window.cancelIdleCallback && typeof handle === 'number') {
+        window.cancelIdleCallback(handle);
+      }
+    };
+  }, [selectedCardId, filteredCards]);
+
   const isReversed = orientation === 'reversed';
   const currentMeaning = isReversed ? selectedCard.reversed : selectedCard.upright;
 
@@ -481,45 +514,47 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
           className="fixed inset-0 z-20 w-screen h-screen overflow-hidden flex flex-col justify-between p-3 sm:p-5 bg-obsidian select-none"
         >
           {/* Top Navigation & View Toggle Bar (Floating across top) */}
-          <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 z-40 relative px-2 shrink-0">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="w-full flex items-center justify-between gap-2 z-40 relative px-1 sm:px-2 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <button
                 type="button"
                 onClick={() => updateStage('deck')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/30 transition-colors focus:outline-none focus:ring-2 focus:ring-gold shrink-0"
               >
                 <Layers className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-                <span>Seal Deck</span>
+                <span className="hidden sm:inline">Seal Deck</span>
               </button>
 
               <div className="flex items-center rounded-lg border border-gold/20 bg-obsidian-elevated/80 backdrop-blur-md p-0.5 text-xs">
                 <button
                   type="button"
                   onClick={() => setViewLayout('wheel')}
-                  className="px-3 py-1 rounded-md font-serif bg-gold text-obsidian font-semibold shadow"
+                  className="px-2.5 sm:px-3 py-1 rounded-md font-serif bg-gold text-obsidian font-semibold shadow"
                 >
-                  Arcana Wheel
+                  <span className="hidden sm:inline">Arcana Wheel</span>
+                  <span className="inline sm:hidden">Wheel</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setViewLayout('catalog')}
-                  className="px-3 py-1 rounded-md font-serif text-slate-300 hover:text-slate-100 transition-colors"
+                  className="px-2.5 sm:px-3 py-1 rounded-md font-serif text-slate-300 hover:text-slate-100 transition-colors"
                 >
-                  All 78 Cards
+                  <span className="hidden sm:inline">All 78 Cards</span>
+                  <span className="inline sm:hidden">78 Cards</span>
                 </button>
               </div>
             </div>
 
-            <div className="relative w-full sm:w-64">
+            <div className="relative w-28 sm:w-64 shrink-0">
               <Search
-                className="absolute left-3 top-2.5 h-4 w-4 text-slate-400"
+                className="absolute left-2.5 top-2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-slate-400"
                 aria-hidden="true"
               />
               <input
                 type="search"
                 aria-label="Filter deck"
                 maxLength={80}
-                placeholder="Search cards..."
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => {
                   const val = e.target.value.slice(0, 80);
@@ -528,7 +563,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                     setViewLayout('catalog');
                   }
                 }}
-                className="w-full bg-obsidian-elevated/80 backdrop-blur-md border border-gold/25 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gold"
+                className="w-full bg-obsidian-elevated/80 backdrop-blur-md border border-gold/25 rounded-lg pl-7 sm:pl-9 pr-2.5 py-1 sm:py-1.5 text-xs text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gold"
               />
             </div>
           </div>
@@ -553,7 +588,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                 {hoveredWheelCard ? hoveredWheelCard.name : 'The 22 Keys'}
               </h3>
               <p className="text-[8px] sm:text-[9px] text-slate-300 italic truncate max-w-full px-1 sm:px-2 mt-0.5">
-                {hoveredWheelCard ? hoveredWheelCard.archetype : 'Hover card to reveal'}
+                {hoveredWheelCard ? hoveredWheelCard.archetype : 'Tap card to inspect'}
               </p>
             </div>
 
@@ -604,19 +639,19 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
 
           {/* 4 Corner Minor Arcana Panels - Anchored to True Viewport Corners */}
           {/* Top-Left: Wands (Fire) */}
-          <div className="absolute top-16 sm:top-20 left-4 sm:left-6 z-30 corner-suit-panel">
+          <div className="absolute top-14 sm:top-20 left-2 sm:left-6 z-30 corner-suit-panel">
             {renderCornerSuit(CORNER_SUIT_CONFIG[0])}
           </div>
           {/* Top-Right: Cups (Water) */}
-          <div className="absolute top-16 sm:top-20 right-4 sm:right-6 z-30 corner-suit-panel">
+          <div className="absolute top-14 sm:top-20 right-2 sm:right-6 z-30 corner-suit-panel">
             {renderCornerSuit(CORNER_SUIT_CONFIG[1])}
           </div>
           {/* Bottom-Left: Swords (Air) */}
-          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-30 corner-suit-panel">
+          <div className="absolute bottom-2 sm:bottom-6 left-2 sm:left-6 z-30 corner-suit-panel">
             {renderCornerSuit(CORNER_SUIT_CONFIG[2])}
           </div>
           {/* Bottom-Right: Pentacles (Earth) */}
-          <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-30 corner-suit-panel">
+          <div className="absolute bottom-2 sm:bottom-6 right-2 sm:right-6 z-30 corner-suit-panel">
             {renderCornerSuit(CORNER_SUIT_CONFIG[3])}
           </div>
         </section>
@@ -675,8 +710,8 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             />
           </div>
         </div>
-          /* Card Grid Catalog with Smooth Float Hover (card-item-hover) */
-          <div className="space-y-4">
+        {/* Card Grid Catalog with Smooth Float Hover (card-item-hover) */}
+        <div className="space-y-4">
             <div
               role="group"
               aria-label="Filter cards by Arcana or Suit"
@@ -743,7 +778,7 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
                         className="w-full"
                       />
                     </div>
-                    <div className="mt-2.5 px-1 w-full">
+                    <div className="mt-2.5 px-1 w-full relative z-10">
                       <span className="block text-[10px] font-mono uppercase tracking-widest text-gold">
                         {card.arcana === 'major' ? `Arcana ${card.numerology.numeral}` : card.suit}
                       </span>
@@ -782,8 +817,8 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
       </div>
 
       {/* CELESTIAL TOP ARC: Floating Header, Navigation Chevrons, & Seal Buttons */}
-      <header className="relative z-10 flex flex-wrap items-center justify-between sm:grid sm:grid-cols-[1fr_auto_1fr] gap-4 py-2 border-b border-gold/20 backdrop-blur-sm">
-        <div className="flex items-center gap-2 justify-self-start">
+      <header className="relative z-10 grid grid-cols-[auto_1fr_auto] items-center gap-1.5 sm:gap-4 py-2 border-b border-gold/20 backdrop-blur-sm">
+        <div className="flex items-center gap-1 sm:gap-2 justify-self-start">
           <button
             type="button"
             onClick={() => {
@@ -791,10 +826,11 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               setHoveredHotspotId(null);
               updateStage('grid');
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-serif tracking-wider uppercase text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-full text-xs font-serif tracking-wider uppercase text-gold-light bg-gold/10 hover:bg-gold/20 border border-gold/40 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <ArrowLeft className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
-            <span>Arcana Wheel</span>
+            <span className="hidden sm:inline">Arcana Wheel</span>
+            <span className="inline sm:hidden">Wheel</span>
           </button>
 
           <button
@@ -804,35 +840,37 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
               setHoveredHotspotId(null);
               updateStage('deck');
             }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs text-slate-300 hover:text-slate-100 bg-obsidian/70 border border-gold/20 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            title="Seal Deck"
+            aria-label="Seal Deck"
+            className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-full text-xs text-slate-300 hover:text-slate-100 bg-obsidian/70 border border-gold/20 transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
           >
             <Layers className="h-3.5 w-3.5 text-gold/80" aria-hidden="true" />
-            <span className="hidden sm:inline">Seal Deck</span>
+            <span className="hidden md:inline">Seal Deck</span>
           </button>
         </div>
 
         {/* Centered Celestial Title Orb */}
-        <div className="flex items-center gap-3 text-center justify-self-center">
+        <div className="flex items-center justify-center gap-1 sm:gap-3 text-center justify-self-center min-w-0">
           <button
             type="button"
             onClick={() => stepCard(-1)}
             aria-label="Previous card"
-            className="p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold"
+            className="p-1 sm:p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold shrink-0"
           >
-            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+            <ChevronLeft className="h-3.5 sm:h-4 w-3.5 sm:w-4" aria-hidden="true" />
           </button>
 
-          <div className="flex flex-col items-center">
-            <span className="text-[10px] font-serif uppercase tracking-[0.2em] text-gold/90 block text-center">
+          <div className="flex flex-col items-center min-w-0">
+            <span className="text-[9px] sm:text-[10px] font-serif uppercase tracking-[0.15em] sm:tracking-[0.2em] text-gold/90 block text-center truncate max-w-[170px] sm:max-w-none">
               {selectedCard.arcana === 'major'
                 ? `Major Arcana \u2022 ${selectedCard.numerology.numeral}`
                 : `${selectedCard.suit} \u2022 ${selectedCard.numerology.numeral}`}
             </span>
-            <div className="relative group inline-flex items-center justify-center rounded px-1.5 py-0.5 focus-within:ring-2 focus-within:ring-gold/60">
+            <div className="relative group inline-flex items-center justify-center rounded px-1 sm:px-1.5 py-0.5 focus-within:ring-2 focus-within:ring-gold/60 max-w-[170px] sm:max-w-none">
               <label htmlFor="card-selector" className="sr-only">
                 Select card
               </label>
-              <span className="text-base sm:text-xl font-serif font-semibold text-gold-light group-hover:text-gold transition-colors text-center cursor-pointer select-none">
+              <span className="text-sm sm:text-xl font-serif font-semibold text-gold-light group-hover:text-gold transition-colors text-center cursor-pointer select-none truncate">
                 {selectedCard.arcana === 'major'
                   ? `${selectedCard.numerology.numeral}. ${selectedCard.name}`
                   : selectedCard.name}
@@ -870,14 +908,14 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             type="button"
             onClick={() => stepCard(1)}
             aria-label="Next card"
-            className="p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold"
+            className="p-1 sm:p-1.5 rounded-full bg-obsidian-elevated/70 border border-gold/30 text-gold hover:bg-gold/15 focus:outline-none focus:ring-2 focus:ring-gold shrink-0"
           >
-            <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            <ChevronRight className="h-3.5 sm:h-4 w-3.5 sm:w-4" aria-hidden="true" />
           </button>
         </div>
 
         {/* Right Element & Astrological Celestial Pill */}
-        <div className="flex items-center gap-2 justify-self-end">
+        <div className="flex items-center gap-1 sm:gap-2 justify-self-end">
           <div className="hidden sm:flex flex-col text-right">
             <span className="text-xs text-slate-200 capitalize font-serif">{selectedCard.element}</span>
             <span className="text-[10px] font-mono text-purple-300">{selectedCard.astrology}</span>
@@ -886,14 +924,15 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
             type="button"
             aria-pressed={showFineGrid}
             onClick={() => setShowFineGrid((prev) => !prev)}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-serif border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
+            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-full text-xs font-serif border transition-colors focus:outline-none focus:ring-2 focus:ring-gold ${
               showFineGrid
                 ? 'bg-gold/15 text-gold-light border-gold/40'
                 : 'bg-obsidian/70 text-slate-300 border-gold/15'
             }`}
           >
             <Grid className="h-3 w-3 text-gold" aria-hidden="true" />
-            <span>Grid {showFineGrid ? 'On' : 'Off'}</span>
+            <span className="hidden sm:inline">Grid {showFineGrid ? 'On' : 'Off'}</span>
+            <span className="inline sm:hidden">{showFineGrid ? 'Grid' : 'Off'}</span>
           </button>
         </div>
       </header>
@@ -962,21 +1001,21 @@ export const SymbolInspector: React.FC<SymbolInspectorProps> = ({
         </div>
 
         {/* CENTER STAGE: Enlarged Flying Card in the Magic Circle Core */}
-        <div className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center gap-3">
+        <div className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center gap-2 sm:gap-3">
           <div
             ref={centerCardRef}
-            style={{ width: 'min(88vw, 38vh, 520px)' }} className="relative z-20"
+            className="relative z-20 w-[min(72vw,30vh,380px)] sm:w-[min(88vw,38vh,520px)]"
           >
             <TarotCardView
               card={selectedCard}
               orientation={orientation}
               overlay={hotspotOverlay}
               loading="eager"
-              className="w-full shadow-2xl shadow-black/90"
+              className="w-full"
             />
           </div>
 
-          <p className="text-[11px] text-gold-light/80 text-center max-w-xs flex items-center justify-center gap-1.5 font-serif">
+          <p className="relative z-30 text-[11px] sm:text-xs text-gold-light/95 text-center max-w-sm flex items-center justify-center gap-1.5 font-serif mt-1.5 px-3 leading-normal">
             <Sparkles className="h-3 w-3 text-gold shrink-0" aria-hidden="true" />
             <span>
               {selectedCard.hotspots.length > 0

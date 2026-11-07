@@ -35,7 +35,7 @@ const TarotCardViewBase: React.FC<TarotCardViewProps> = ({
       aria-hidden={isFlipped || undefined}
       className={`${
         canFlip ? 'absolute inset-0 backface-hidden' : 'relative'
-      } w-full h-full rounded-xl overflow-hidden border border-gold/40 bg-obsidian-surface shadow-2xl shadow-black/80 flex flex-col`}
+      } w-full h-full rounded-xl overflow-hidden border border-gold/40 bg-obsidian-surface shadow-md shadow-black/40 flex flex-col`}
     >
       {/* Artwork wrapper rotates 180deg when reversed so badges & overlays stay upright */}
       <div
@@ -136,7 +136,7 @@ const TarotCardViewBase: React.FC<TarotCardViewProps> = ({
           aria-hidden={!isFlipped || undefined}
           tabIndex={isFlipped ? 0 : -1}
           aria-label={`Reveal ${card.name}`}
-          className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-xl overflow-hidden border-2 border-gold/50 bg-obsidian-surface p-3 shadow-2xl shadow-black/80 cursor-pointer flex flex-col items-center justify-center focus:outline-none focus:ring-2 focus:ring-gold"
+          className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-xl overflow-hidden border-2 border-gold/50 bg-obsidian-surface p-3 shadow-md shadow-black/40 cursor-pointer flex flex-col items-center justify-center focus:outline-none focus:ring-2 focus:ring-gold"
         >
           <div className="w-full h-full border border-gold/30 rounded-lg p-2 flex flex-col items-center justify-center bg-gradient-to-br from-obsidian via-obsidian-elevated to-obsidian relative">
             <div className="w-24 h-24 rounded-full border-2 border-gold/40 flex items-center justify-center relative">
